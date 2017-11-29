@@ -16,6 +16,7 @@ public:
   void stop();
   void show_status();
   bool is_alive();
+  void take_hit(int attack_strength);
 
   virtual void start_supplying(Oxygen_Depot*);
   virtual void start_depositing(Space_Station*);

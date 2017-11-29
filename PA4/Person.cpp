@@ -69,6 +69,20 @@ bool Person::is_alive()
     return true;
 }
 
+void Person::take_hit(int attack_strength)
+{
+  health -= attack_strength;
+  if (health <= 0)
+  {
+    cout << "Gasp!" << endl;
+    state = 'x';
+  }
+  else
+  {
+    cout << "Ouch!" << endl;
+  }
+}
+
 void Person::start_supplying(Oxygen_Depot*)
 {
   cout << "Sorry, I can't work a depot" << endl;
