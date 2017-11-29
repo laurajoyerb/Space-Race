@@ -7,12 +7,14 @@ using namespace std;
 Person::Person() : Game_Object('x')
 {
   speed = 5;
+  health = 5;
   cout << "Person default constructed." << endl;
 }
 
 Person::Person(char in_code) : Game_Object(in_code)
 {
   speed = 5;
+  health = 5;
   state = 's';
   cout << "Person constructed." << endl;
 }
@@ -20,6 +22,7 @@ Person::Person(char in_code) : Game_Object(in_code)
 Person::Person(Cart_Point in_loc, int in_id, char in_code) : Game_Object(in_loc, in_id, in_code)
 {
   speed = 5;
+  health = 5;
   cout << "Person constructed." << endl;
 }
 
@@ -56,6 +59,14 @@ void Person::show_status()
   {
     cout << " moving at speed " << speed << " to " << destination << " at each step of " << delta;
   }
+}
+
+bool Person::is_alive()
+{
+  if (state == 'x')
+    return false;
+  else
+    return true;
 }
 
 void Person::start_supplying(Oxygen_Depot*)

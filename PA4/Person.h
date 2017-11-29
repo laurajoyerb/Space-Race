@@ -15,6 +15,7 @@ public:
   void start_moving(Cart_Point);
   void stop();
   void show_status();
+  bool is_alive();
 
   virtual void start_supplying(Oxygen_Depot*);
   virtual void start_depositing(Space_Station*);
@@ -23,6 +24,8 @@ public:
 protected:
   bool update_location();
   void setup_destination(Cart_Point);
+
+  int health;
 
 private:
   double speed;
