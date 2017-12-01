@@ -59,6 +59,10 @@ void Person::show_status()
   {
     cout << " moving at speed " << speed << " to " << destination << " at each step of " << delta;
   }
+  if (state =='x')
+  {
+    cout << " is dead.";
+  }
 }
 
 bool Person::is_alive()
@@ -74,7 +78,7 @@ void Person::take_hit(int attack_strength)
   health -= attack_strength;
   if (health <= 0)
   {
-    cout << "Gasp!" << endl;
+    cout << "Gasp! I'm dying..." << endl;
     state = 'x';
   }
   else

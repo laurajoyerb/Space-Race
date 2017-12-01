@@ -32,138 +32,149 @@ bool Astronaut::update()
 {
   bool arrive; // checks if object has arrived at location
   double extract; // amount extracted and received by astronaut
-  switch (state)
+  if (state == 'x')
   {
-    case 's':
+    return false;
+  }
+  else
+  {
+    if (health < 3)
     {
-      return false; // Nothing changes, nothing arrives, so return false
-      break;
+      display_code = tolower(display_code);
     }
-    case 'm':
+    switch (state)
     {
-      arrive = Person::update_location(); // updates location of moving astronaut and advances one step
-      if (arrive) // once it arrives, the state changes to stopped
+      case 's':
       {
-        state = 's';
-        return true;
+        return false; // Nothing changes, nothing arrives, so return false
+        break;
       }
-      else
+      case 'm':
       {
-        amount_oxygen--; // if it hasn't arrived yet, oxygen decreases
-        if (amount_oxygen <= 0) // if the astronaut runs out of oxygen, it is locked
+        arrive = Person::update_location(); // updates location of moving astronaut and advances one step
+        if (arrive) // once it arrives, the state changes to stopped
         {
-          state = 'x';
-          cout << "I can't move, I'm out of oxygen." << endl;
+          state = 's';
           return true;
         }
         else
         {
-          amount_moonstones++; // otherwise, moonstones increments
-        }
-        return false;
-      }
-      break;
-    }
-    case 'o':
-    {
-      arrive = Person::update_location(); // updates astronaut's progress towards oxygen depot
-      if (arrive)
-      {
-        state = 'g';
-        return true;
-      }
-      else
-      {
-        amount_oxygen--;
-
-        if (amount_oxygen <= 0)
-        {
-          state = 'x';
-          cout << "I can't move. I'm out of oxygen" << endl;
-          return true;
-        }
-        else
-        {
-          amount_moonstones++;
-        }
-        return false;
-      }
-      break;
-    }
-    case 'g':
-    {
-      extract = depot -> extract_oxygen();
-      amount_oxygen += extract;
-      cout << display_code << id_num << ": Got " << extract << " more oxygen." << endl;
-      state = 's';
-      return true;
-      break;
-    }
-    case 'i':
-    {
-      arrive = Person::update_location();
-      if (arrive)
-      {
-        state = 'd';
-        return true;
-      }
-      else
-      {
-        amount_oxygen--;
-        if (amount_oxygen <= 0)
-        {
-          state = 'x';
-          cout << "I can't move. I'm out of oxygen" << endl;
-          return true;
-        }
-        else
-        {
-          amount_moonstones++;
-        }
-        return false;
-      }
-      break;
-    }
-    case 'd':
-    {
-      cout << display_code << id_num << ": Deposit " << amount_moonstones << " moon stones." << endl;
-      home -> deposit_moonstones(amount_moonstones);
-      amount_moonstones = 0;
-      state = 's';
-      return true;
-      break;
-    }
-    case 'l':
-    {
-      if (amount_oxygen <= 0)
-      {
-        return false; // if it is out of oxygen, nothing happens
-      }
-      else
-      {
-        Cart_Point dest = home -> get_location();
-        arrive = Person::update_location();
-
-        // Initial idea was to check if astronaut's location was already at destination of Space station, and if so, there's no need to update location or add astronauts because the astronaut would've already done so when it first arrived. However, this idea fails if the astronaut is already at the station (say, just having finished depositing moonstones), and THEN the lock command is called. This changes the state to 'l', and the destination and space station's location are the same. There is no way to differentiate between an astronaut that has just "arrived" at a space station ready to lock in or one tht has been locked in at that station for several turns. Both cases have a state of 'l' and the same location, and update_location() returns true for both as well. So, the additional member "there" provides the difference we need to differentiate between treatment of the first "arrival" versus just being at the station.
-
-        // It is initially set to false because the astronaut is NOT there (at the station) and is not locked in. Once the astronaut locks in, this bool is set to true, so the following calls to update will not add more astronauts even though there is only one waiting and locked in.
-
-        if (arrive && !there)
-        {
-          home -> add_astronaut(); // if astronaut has arrived, the astronaut is locked in to the space station
-          there = true;
-          return true;
-        }
-        else
-        {
+          amount_oxygen--; // if it hasn't arrived yet, oxygen decreases
+          if (amount_oxygen <= 0) // if the astronaut runs out of oxygen, it is locked
+          {
+            state = 'x';
+            cout << "I can't move, I'm out of oxygen." << endl;
+            return true;
+          }
+          else
+          {
+            amount_moonstones++; // otherwise, moonstones increments
+          }
           return false;
         }
+        break;
       }
-      break;
-    }
-    default:
-    {
-      return false;
+      case 'o':
+      {
+        arrive = Person::update_location(); // updates astronaut's progress towards oxygen depot
+        if (arrive)
+        {
+          state = 'g';
+          return true;
+        }
+        else
+        {
+          amount_oxygen--;
+
+          if (amount_oxygen <= 0)
+          {
+            state = 'x';
+            cout << "I can't move. I'm out of oxygen" << endl;
+            return true;
+          }
+          else
+          {
+            amount_moonstones++;
+          }
+          return false;
+        }
+        break;
+      }
+      case 'g':
+      {
+        extract = depot -> extract_oxygen();
+        amount_oxygen += extract;
+        cout << display_code << id_num << ": Got " << extract << " more oxygen." << endl;
+        state = 's';
+        return true;
+        break;
+      }
+      case 'i':
+      {
+        arrive = Person::update_location();
+        if (arrive)
+        {
+          state = 'd';
+          return true;
+        }
+        else
+        {
+          amount_oxygen--;
+          if (amount_oxygen <= 0)
+          {
+            state = 'x';
+            cout << "I can't move. I'm out of oxygen" << endl;
+            return true;
+          }
+          else
+          {
+            amount_moonstones++;
+          }
+          return false;
+        }
+        break;
+      }
+      case 'd':
+      {
+        cout << display_code << id_num << ": Deposit " << amount_moonstones << " moon stones." << endl;
+        home -> deposit_moonstones(amount_moonstones);
+        amount_moonstones = 0;
+        state = 's';
+        return true;
+        break;
+      }
+      case 'l':
+      {
+        if (amount_oxygen <= 0)
+        {
+          return false; // if it is out of oxygen, nothing happens
+        }
+        else
+        {
+          Cart_Point dest = home -> get_location();
+          arrive = Person::update_location();
+
+          // Initial idea was to check if astronaut's location was already at destination of Space station, and if so, there's no need to update location or add astronauts because the astronaut would've already done so when it first arrived. However, this idea fails if the astronaut is already at the station (say, just having finished depositing moonstones), and THEN the lock command is called. This changes the state to 'l', and the destination and space station's location are the same. There is no way to differentiate between an astronaut that has just "arrived" at a space station ready to lock in or one tht has been locked in at that station for several turns. Both cases have a state of 'l' and the same location, and update_location() returns true for both as well. So, the additional member "there" provides the difference we need to differentiate between treatment of the first "arrival" versus just being at the station.
+
+          // It is initially set to false because the astronaut is NOT there (at the station) and is not locked in. Once the astronaut locks in, this bool is set to true, so the following calls to update will not add more astronauts even though there is only one waiting and locked in.
+
+          if (arrive && !there)
+          {
+            home -> add_astronaut(); // if astronaut has arrived, the astronaut is locked in to the space station
+            there = true;
+            return true;
+          }
+          else
+          {
+            return false;
+          }
+        }
+        break;
+      }
+      default:
+      {
+        return false;
+      }
     }
   }
 }
@@ -240,6 +251,11 @@ void Astronaut::show_status()
       {
         cout << " is locked at Space Station." << endl;
       }
+      break;
+    }
+    case 'x':
+    {
+      cout << endl;
       break;
     }
   }

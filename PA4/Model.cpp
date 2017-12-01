@@ -8,19 +8,27 @@ Model::Model()
   time = 0;
   count_down = 10;
 
-  num_objects = 6;
+  num_objects = 8;
   num_persons = 2;
+  num_aliens = 2;
   num_depots = 2;
   num_station = 2;
+
+  alive = num_persons;
 
   Cart_Point pt1 = Cart_Point(5,1);
   Cart_Point pt2 = Cart_Point(10,1);
   Cart_Point pt3 = Cart_Point(1,20);
   Cart_Point pt4 = Cart_Point(10,20);
   Cart_Point pt5 = Cart_Point(5,5);
+  Cart_Point pt6 = Cart_Point(7,14);
+  Cart_Point pt7 = Cart_Point(7, 5);
 
   Astronaut* ptrA1 = new Astronaut(1,pt1);
   Astronaut* ptrA2 = new Astronaut(2, pt2);
+
+  Alien* ptrX1 = new Alien(1, pt6);
+  Alien* ptrX2 = new Alien(2, pt7);
 
   Oxygen_Depot* ptrD1 = new Oxygen_Depot(pt3, 1);
   Oxygen_Depot* ptrD2 = new Oxygen_Depot(pt4, 2);
@@ -34,6 +42,8 @@ Model::Model()
   object_ptrs[3] = ptrD2;
   object_ptrs[4] = ptrS1;
   object_ptrs[5] = ptrS2;
+  object_ptrs[6] = ptrX1;
+  object_ptrs[7] = ptrX2;
 
   person_ptrs[0] = ptrA1;
   person_ptrs[1] = ptrA2;
@@ -43,6 +53,9 @@ Model::Model()
 
   station_ptrs[0] = ptrS1;
   station_ptrs[1] = ptrS2;
+
+  alien_ptrs[0] = ptrX1;
+  alien_ptrs[1] = ptrX2;
 
   cout << "Model default constructed" << endl;
 }
@@ -63,6 +76,18 @@ Person* Model::get_Person_ptr(int id)
     if(person_ptrs[i] -> get_id() == id)
     {
       return person_ptrs[i];
+    }
+  }
+  return 0;
+}
+
+Alien* Model::get_Alien_ptr(int id)
+{
+  for (int i = 0; i < num_aliens; i++)
+  {
+    if(alien_ptrs[i] -> get_id() == id)
+    {
+      return alien_ptrs[i];
     }
   }
   return 0;
@@ -95,6 +120,15 @@ Space_Station* Model::get_Space_Station_ptr(int id)
 bool Model::update()
 {
   time++; // Increments time always
+
+  alive = 0;
+  for (int i = 0; i < num_persons; i++)
+  {
+    if (person_ptrs[i] -> is_alive())
+    {
+      alive++;
+    }
+  }
 
   bool upgraded = true; // Checks if ALL stations are upgraded
 

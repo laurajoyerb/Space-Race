@@ -10,7 +10,7 @@ int main()
   // Intro statements
   cout << "EC327: Introduction to Software Engineering" << endl;
   cout << "Fall 2017" << endl;
-  cout << "Programming Assignment 3" << endl;
+  cout << "Programming Assignment 4" << endl;
 
   // command holds first char in user input to determine next action
   char command;
@@ -20,7 +20,7 @@ int main()
 
   View v = View();
 
-  // Begins gaem with statuses of all objects and the initial display and time
+  // Begins game with statuses of all objects and the initial display and time
   m.show_status();
   m.display(v);
 
@@ -68,6 +68,11 @@ int main()
       case 'r':
       {
         do_run_command(m);
+        break;
+      }
+      case 'a':
+      {
+        do_attack_command(m);
         break;
       }
       case 'q':

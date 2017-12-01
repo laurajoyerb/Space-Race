@@ -2,6 +2,7 @@
 #define VIEW
 
 #include "Astronaut.h"
+#include "Alien.h"
 
 const int view_maxsize = 20;
 

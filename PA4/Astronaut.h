@@ -2,6 +2,8 @@
 #define ASTRONAUT
 
 #include "Person.h"
+#include <stdio.h>
+#include <ctype.h>
 
 using namespace std;
 
