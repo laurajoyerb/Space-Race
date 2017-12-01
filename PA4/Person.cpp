@@ -81,6 +81,10 @@ void Person::take_hit(int attack_strength)
     cout << "Gasp! I'm dying..." << endl;
     state = 'x';
   }
+  else if (health < 3)
+  {
+    display_code = tolower(display_code);
+  }
   else
   {
     cout << display_code << id_num << ": Ouch!" << endl;

@@ -27,6 +27,11 @@ void Alien::start_attack(Person* in_target)
   Cart_Point AlienLoc = get_location();
   Cart_Point AstroLoc = in_target -> get_location();
   double dist = cart_distance(AlienLoc, AstroLoc);
+
+  cout << "ALien location: " << AlienLoc << endl;
+  cout << "Person location: " << AstroLoc << endl;
+  cout << "Distance between pts: " << dist << endl;
+
   if (dist <= range)
   {
     cout << display_code << id_num << ": Smash!" << endl;

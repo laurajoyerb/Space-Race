@@ -3,6 +3,8 @@
 
 #include "Space_Station.h"
 #include "Oxygen_Depot.h"
+#include <stdio.h>
+#include <ctype.h>
 
 class Person : public Game_Object
 {

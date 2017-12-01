@@ -30,6 +30,7 @@ Astronaut::~Astronaut()
 
 bool Astronaut::update()
 {
+  cout << "Astronaut update function called" << endl;
   bool arrive; // checks if object has arrived at location
   double extract; // amount extracted and received by astronaut
   if (state == 'x')
@@ -213,7 +214,7 @@ void Astronaut::show_status()
   {
     case 's':
     {
-      cout << " stopped with " << amount_oxygen << " oxygen and " << amount_moonstones << " moon stones." << endl;
+      cout << " stopped with " << amount_oxygen << " oxygen and " << amount_moonstones << " moon stones and " << health << " health." << endl;
       break;
     }
     case 'm':
@@ -223,7 +224,7 @@ void Astronaut::show_status()
     }
     case 'o':
     {
-      cout << " is outbound to a Depot with " << amount_oxygen << " oxygen and " << amount_moonstones << " moon stones." << endl;
+      cout << " is outbound to a Depot with " << amount_oxygen << " oxygen and " << amount_moonstones << " moon stones and " << health << " health." << endl;
       break;
     }
     case 'g':
@@ -243,14 +244,7 @@ void Astronaut::show_status()
     }
     case 'l':
     {
-      if (amount_oxygen <= 0)
-      {
-        cout << " is locked. Out of oxygen." << endl;
-      }
-      else
-      {
-        cout << " is locked at Space Station." << endl;
-      }
+      cout << " is locked at Space Station." << endl;
       break;
     }
     case 'x':

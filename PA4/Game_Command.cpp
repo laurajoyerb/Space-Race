@@ -124,8 +124,8 @@ void do_attack_command(Model& model)
 
   cin >> id1 >> id2;
 
-  Person* p = model.get_Person_ptr(id1);
-  Alien* x = model.get_Alien_ptr(id2);
+  Person* p = model.get_Person_ptr(id2);
+  Alien* x = model.get_Alien_ptr(id1);
 
   x -> start_attack(p);
 }
