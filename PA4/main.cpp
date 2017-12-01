@@ -27,7 +27,7 @@ int main()
 
   while (true) // runs until broken by an exit(0)
   {
-    bool valid = true; // stores whether or not command was a valid command
+    bool show; // stores whether or not a command shows the display after the command
 
     cout << "Enter a command: ";
 
@@ -38,41 +38,49 @@ int main()
       case 'm':
       {
         do_move_command(m);
+        show = false;
         break;
       }
       case 'w':
       {
         do_work_command(m);
+        show = false;
         break;
       }
       case 'd':
       {
         do_deposit_command(m);
+        show = false;
         break;
       }
       case 's':
       {
         do_stop_command(m);
+        show = false;
         break;
       }
       case 'l':
       {
         do_lock_command(m);
+        show = false;
         break;
       }
       case 'g':
       {
         do_go_command(m);
+        show = true;
         break;
       }
       case 'r':
       {
         do_run_command(m);
+        show = true;
         break;
       }
       case 'a':
       {
         do_attack_command(m);
+        show = false;
         break;
       }
       case 'q':
@@ -83,11 +91,11 @@ int main()
       default: // Executes for invalid command codes
       {
         cout << "ERROR: Please enter a valid command!" << endl;
-        valid = false; // invalid flag
+        show = false; // invalid flag
         break;
       }
     }
-    if (valid)
+    if (show)
     {
       m.display(v); // only displays if command was valid; displays after every command is executed
     }

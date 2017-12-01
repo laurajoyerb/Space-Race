@@ -27,11 +27,9 @@ void Alien::start_attack(Person* in_target)
   Cart_Point AlienLoc = get_location();
   Cart_Point AstroLoc = in_target -> get_location();
   double dist = cart_distance(AlienLoc, AstroLoc);
-  cout << "Distance between targets: " << dist << endl;
-  cout << "Range: " << range << endl;
   if (dist <= range)
   {
-    cout << "Smash!" << endl;
+    cout << display_code << id_num << ": Smash!" << endl;
     target = in_target;
     state = 'a';
   }
@@ -49,7 +47,6 @@ bool Alien::update()
     case 's':
     {
       return false;
-      break;
     }
     case 'm':
     {
@@ -63,7 +60,6 @@ bool Alien::update()
       {
         return false;
       }
-      break;
     }
     case 'a':
     {
@@ -73,24 +69,29 @@ bool Alien::update()
       if (dist > range)
       {
         cout << "Target is out of range" << endl;
+        state = 's';
         return false;
       }
       else
       {
         if (target -> is_alive())
         {
-          cout << "Destroy!" << endl;
+          cout << display_code << id_num << ": Take that!" << endl;
           target -> take_hit(attack_strength);
           return false;
         }
         else
         {
-          cout << "I triumph!" << endl;
+          cout << display_code << id_num << ": I triumph!" << endl;
           state = 's';
           return true;
         }
       }
-      break;
+    }
+    default:
+    {
+      cout << "Something messed up!" << endl;
+      return false;
     }
   }
 }

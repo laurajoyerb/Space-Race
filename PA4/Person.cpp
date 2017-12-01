@@ -83,7 +83,7 @@ void Person::take_hit(int attack_strength)
   }
   else
   {
-    cout << "Ouch!" << endl;
+    cout << display_code << id_num << ": Ouch!" << endl;
   }
 }
 
