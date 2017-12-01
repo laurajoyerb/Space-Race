@@ -25,11 +25,23 @@ void do_move_command(Model& model)
   if (ax == 'a')
   {
     Person* p = model.get_Person_ptr(id);
+    while (p == 0)
+    {
+      cout << "Invalid id. Re-enter id: ";
+      cin >> id;
+      p = model.get_Person_ptr(id);
+    }
     p -> start_moving(pt);
   }
   else if (ax == 'x')
   {
     Alien* x = model.get_Alien_ptr(id);
+    while (!x)
+    {
+      cout << "Invalid ID. Re-enter ID: ";
+      cin >> id;
+      x = model.get_Alien_ptr(id);
+    }
     x -> start_moving(pt);
   }
 }
@@ -41,7 +53,20 @@ void do_work_command(Model& model)
   cin >> id1 >> id2;
 
   Person* p = model.get_Person_ptr(id1);
+  while (!p)
+  {
+    cout << "Invalid ID for Astronaut. Re-enter Astronaut ID: ";
+    cin >> id1;
+    p = model.get_Person_ptr(id1);
+  }
+
   Oxygen_Depot* od = model.get_Oxygen_Depot_ptr(id2);
+  while (!od)
+  {
+    cout << "Invalid ID for Oxygen Depot. Re-enter Depot ID: ";
+    cin >> id2;
+    od = model.get_Oxygen_Depot_ptr(id2);
+  }
 
   p -> start_supplying(od);
 }
@@ -53,7 +78,20 @@ void do_deposit_command(Model& model)
   cin >> id1 >> id2;
 
   Person* p = model.get_Person_ptr(id1);
+  while (!p)
+  {
+    cout << "Invalid ID for Astronaut. Re-enter Astronaut ID: ";
+    cin >> id1;
+    p = model.get_Person_ptr(id1);
+  }
+
   Space_Station* ss = model.get_Space_Station_ptr(id2);
+  while (!ss)
+  {
+    cout << "Invalid ID for Space Station. Re-enter Station ID: ";
+    cin >> id2;
+    ss = model.get_Space_Station_ptr(id2);
+  }
 
   p -> start_depositing(ss);
 }
@@ -77,11 +115,23 @@ void do_stop_command(Model& model)
   if (ax == 'a')
   {
     Person* p = model.get_Person_ptr(id);
+    while (!p)
+    {
+      cout << "Invalid id. Re-enter id: ";
+      cin >> id;
+      p = model.get_Person_ptr(id);
+    }
     p -> stop();
   }
   else if (ax == 'x')
   {
     Alien* x = model.get_Alien_ptr(id);
+    while (!x)
+    {
+      cout << "Invalid ID. Re-enter ID: ";
+      cin >> id;
+      x = model.get_Alien_ptr(id);
+    }
     x -> stop();
   }
 }
@@ -93,7 +143,20 @@ void do_lock_command(Model& model)
   cin >> id1 >> id2;
 
   Person* p = model.get_Person_ptr(id1);
+  while (!p)
+  {
+    cout << "Invalid ID for Astronaut. Re-enter Astronaut ID: ";
+    cin >> id1;
+    p = model.get_Person_ptr(id1);
+  }
+
   Space_Station* ss = model.get_Space_Station_ptr(id2);
+  while (!ss)
+  {
+    cout << "Invalid ID for Space Station. Re-enter Station ID: ";
+    cin >> id2;
+    ss = model.get_Space_Station_ptr(id2);
+  }
 
   p -> go_to_station(ss);
 }
@@ -125,7 +188,20 @@ void do_attack_command(Model& model)
   cin >> id1 >> id2;
 
   Person* p = model.get_Person_ptr(id2);
+  while (!p)
+  {
+    cout << "Invalid ID for Astronaut. Re-enter Astronaut ID: ";
+    cin >> id2;
+    p = model.get_Person_ptr(id2);
+  }
+
   Alien* x = model.get_Alien_ptr(id1);
+  while (!x)
+  {
+    cout << "Invalid ID for Alien. Re-enter Alien ID: ";
+    cin >> id1;
+    x = model.get_Alien_ptr(id1);
+  }
 
   x -> start_attack(p);
 }
