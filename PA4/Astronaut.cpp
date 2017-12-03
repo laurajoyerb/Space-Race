@@ -30,7 +30,6 @@ Astronaut::~Astronaut()
 
 bool Astronaut::update()
 {
-  cout << "Astronaut update function called" << endl;
   bool arrive; // checks if object has arrived at location
   double extract; // amount extracted and received by astronaut
   if (state == 'x')
@@ -182,28 +181,49 @@ bool Astronaut::update()
 
 void Astronaut::start_supplying(Oxygen_Depot* inputDepot)
 {
-  depot = inputDepot; // assigns pointer
-  Person::setup_destination(inputDepot -> get_location());
-  state = 'o';
-  cout << "Astronaut " << get_id() << " supplying from Oxygen Depot " << inputDepot -> get_id() << endl;
-  cout << display_code << get_id() << ": Yes, my lord." << endl;
+  if (state == 'x')
+  {
+    cout << "I can't move, I'm dead." << endl;
+  }
+  else
+  {
+    depot = inputDepot; // assigns pointer
+    Person::setup_destination(inputDepot -> get_location());
+    state = 'o';
+    cout << "Astronaut " << get_id() << " supplying from Oxygen Depot " << inputDepot -> get_id() << endl;
+    cout << display_code << get_id() << ": Yes, my lord." << endl;
+  }
 }
 
 void Astronaut::start_depositing(Space_Station* inputStation)
 {
-  home = inputStation; // assigns pointer
-  Person::setup_destination(inputStation -> get_location());
-  state = 'i';
-  cout << "Astronaut " << get_id() << " depositing to Space Station " << inputStation -> get_id() << endl;
-  cout << display_code << get_id() << ": Yes, my lord." << endl;
+  if (state == 'x')
+  {
+    cout << "I can't move, I'm dead." << endl;
+  }
+  else
+  {
+    home = inputStation; // assigns pointer
+    Person::setup_destination(inputStation -> get_location());
+    state = 'i';
+    cout << "Astronaut " << get_id() << " depositing to Space Station " << inputStation -> get_id() << endl;
+    cout << display_code << get_id() << ": Yes, my lord." << endl;
+  }
 }
 
 void Astronaut::go_to_station(Space_Station* inputStation)
 {
-  home = inputStation; // assigns pointer
-  state = 'l';
-  Person::setup_destination(inputStation -> get_location());
-  cout << "Astronaut " << get_id() << " locking in at Space Station " << inputStation -> get_id() << endl;
+  if (state == 'x')
+  {
+    cout << "I can't move, I'm dead." << endl;
+  }
+  else
+  {
+    home = inputStation; // assigns pointer
+    state = 'l';
+    Person::setup_destination(inputStation -> get_location());
+    cout << "Astronaut " << get_id() << " locking in at Space Station " << inputStation -> get_id() << endl;
+  }
 }
 
 void Astronaut::show_status()

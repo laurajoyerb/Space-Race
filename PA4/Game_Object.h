@@ -24,6 +24,7 @@ public:
   int get_id();
   char get_state();
   virtual void show_status();
+  virtual bool is_alive();
 
 };
 

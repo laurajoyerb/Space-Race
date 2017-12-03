@@ -30,6 +30,11 @@ Cart_Point Game_Object::get_location()
   return location;
 }
 
+bool Game_Object::is_alive()
+{
+  return true;
+}
+
 int Game_Object::get_id()
 {
   return id_num;

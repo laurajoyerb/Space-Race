@@ -33,23 +33,37 @@ Person::~Person()
 
 void Person::start_moving(Cart_Point dest)
 {
-  if (dest.x == location.x && dest.y == location.y) // If already at location, nothing happens besides an "error" message
+  if (state == 'x')
   {
-    cout << "I'm already there. see?" << endl;
+    cout << "I can't move, I'm dead." << endl;
   }
   else
   {
-    setup_destination(dest);
-    state = 'm';
-    cout << "Moving " << id_num << " to " << dest << endl;
-    cout << display_code << id_num << ": On my way." << endl;
+    if (dest.x == location.x && dest.y == location.y) // If already at location, nothing happens besides an "error" message
+    {
+      cout << "I'm already there. see?" << endl;
+    }
+    else
+    {
+      setup_destination(dest);
+      state = 'm';
+      cout << "Moving " << id_num << " to " << dest << endl;
+      cout << display_code << id_num << ": On my way." << endl;
+    }
   }
 }
 
 void Person::stop()
 {
-  state = 's';
-  cout << display_code << id_num << ": Stopped." << endl;
+  if (state == 'x')
+  {
+    cout << "I can't move, I'm dead." << endl;
+  }
+  else
+  {
+    state = 's';
+    cout << display_code << id_num << ": Stopped." << endl;
+  }
 }
 
 void Person::show_status()

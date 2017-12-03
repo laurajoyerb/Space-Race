@@ -237,7 +237,10 @@ void Model::display(View& view)
 
   for (int i = 0; i < num_objects; i++)
   {
-    view.plot(object_ptrs[i]); // plots each object on display
+    if (object_ptrs[i] -> get_state() != 'x')
+    {
+      view.plot(object_ptrs[i]); // plots each object on display
+    }
   }
 
   view.draw();

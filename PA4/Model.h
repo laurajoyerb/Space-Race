@@ -13,7 +13,7 @@ private:
 
   int time;
   int count_down;
-  int alive;
+  int alive; // tracks how many astronauts are alive
 
   Game_Object* object_ptrs[10];
   int num_objects;
