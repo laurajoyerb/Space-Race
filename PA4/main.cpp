@@ -2,6 +2,7 @@
 #include "Game_Command.h"
 #include "Model.h"
 #include "View.h"
+#include "Input_Handling.h"
 
 using namespace std;
 
@@ -32,7 +33,6 @@ int main()
     cout << "Enter a command: ";
 
     cin >> command; // first command is taken here, all others are taken inside Game_Command functions
-
     switch (command)
     {
       case 'm':
@@ -100,6 +100,5 @@ int main()
       m.display(v); // only displays if command was valid; displays after every command is executed
     }
   }
-
   return 0;
 }

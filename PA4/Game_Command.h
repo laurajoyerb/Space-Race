@@ -2,6 +2,7 @@
 #define GAME_COMMAND
 
 #include "Model.h"
+#include "Input_Handling.h"
 
 void do_move_command(Model& model);
 
