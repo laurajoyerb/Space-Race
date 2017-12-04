@@ -67,7 +67,7 @@ void View::plot(Game_Object* ptr)
 
 void View::draw()
 {
-  for (int y = size; y > 0; y--) // loops for every row printed
+  for (int y = size - 1; y >= 0; y--) // loops for every row printed
   {
     if(!(y % 2)) // prints y axis value for every other line
     {
