@@ -10,7 +10,13 @@ void do_move_command(Model& model)
   char ax;
 
   cin >> id >> x >> y;
-  
+  if (cin.fail())
+  {
+    throw Invalid_Input("Bad");
+    cin.clear();
+    cin.ignore(numeric_limits<streamsize>::max());
+  }
+
   cout << "Move Astronaut (enter 'a') or Alien (enter 'x'): ";
   cin >> ax;
 
@@ -204,6 +210,11 @@ void do_attack_command(Model& model)
   }
 
   x -> start_attack(p);
+}
+
+void do_new_command(Model& model)
+{
+  model.handle_new_command();
 }
 
 void do_quit_command(Model& model)

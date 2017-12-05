@@ -31,10 +31,9 @@ int main()
     bool show; // stores whether or not a command shows the display after the command
 
     cout << "Enter a command: ";
-
+    cin >> command;
     try
     {
-      cin >> command; // first command is taken here, all others are taken inside Game_Command functions
 
       switch (command)
       {
@@ -83,6 +82,12 @@ int main()
         case 'a':
         {
           do_attack_command(m);
+          show = false;
+          break;
+        }
+        case 'n':
+        {
+          do_new_command(m);
           show = false;
           break;
         }

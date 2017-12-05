@@ -24,6 +24,8 @@ public:
   virtual void start_depositing(Space_Station*);
   virtual void go_to_station(Space_Station*);
 
+  double speed;
+
 protected:
   bool update_location();
   void setup_destination(Cart_Point);
@@ -31,7 +33,6 @@ protected:
   int health;
 
 private:
-  double speed;
   Cart_Point destination;
   Cart_Vector delta;
 };

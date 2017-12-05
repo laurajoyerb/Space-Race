@@ -5,7 +5,7 @@ using namespace std;
 
 Model::Model()
 {
-  time = 0;
+  timer = 0;
   count_down = 10;
 
   alive = 2;
@@ -122,7 +122,35 @@ Space_Station* Model::get_Space_Station_ptr(int id)
 
 bool Model::update()
 {
-  time++; // Increments time always
+  timer++; // Increments time always
+  srand(timer);
+  int gravity = rand() % 10; // generates integers from 0-9
+
+  // Three values are picked to change gravity (gravity changes 3/10 of the time)
+  if (gravity == 0)
+  {
+    cout << "Gravity is now greater!" << endl;
+    for (list <Person*>::iterator it = person_ptrs.begin(); it != person_ptrs.end(); ++it)
+    {
+      (*it) -> speed = 2.5;
+    }
+  }
+  else if (gravity == 1)
+  {
+    cout << "Gravity is normal!" << endl;
+    for (list <Person*>::iterator it = person_ptrs.begin(); it != person_ptrs.end(); ++it)
+    {
+      (*it) -> speed = 5;
+    }
+  }
+  else if (gravity == 2)
+  {
+    cout << "Gravity is now less!" << endl;
+    for (list <Person*>::iterator it = person_ptrs.begin(); it != person_ptrs.end(); ++it)
+    {
+      (*it) -> speed = 10;
+    }
+  }
 
   alive = 0;
 
@@ -234,7 +262,7 @@ bool Model::update()
 
 void Model::show_status()
 {
-  cout << "Time: " << time << endl;
+  cout << "Time: " << timer << endl;
   for (list <Game_Object*>::iterator it = object_ptrs.begin(); it != object_ptrs.end(); ++it)
   {
     (*it) -> show_status();
@@ -251,4 +279,49 @@ void Model::display(View& view)
   }
 
   view.draw();
+}
+
+void Model::handle_new_command()
+{
+  char type;
+  int id, x, y;
+
+  cin >> type >> id >> x >> y;
+
+  Cart_Point pt = Cart_Point(x,y);
+  switch (type)
+  {
+    case 'd':
+    {
+      Oxygen_Depot* ptrD = new Oxygen_Depot(pt, id);
+      depot_ptrs.push_back(ptrD);
+      object_ptrs.push_back(ptrD);
+      active_ptrs.push_back(ptrD);
+      break;
+    }
+    case 's':
+    {
+      Space_Station* ptrS = new Space_Station(pt, id);
+      station_ptrs.push_back(ptrS);
+      object_ptrs.push_back(ptrS);
+      active_ptrs.push_back(ptrS);
+      break;
+    }
+    case 'a':
+    {
+      Astronaut* ptrA = new Astronaut(id, pt);
+      person_ptrs.push_back(ptrA);
+      object_ptrs.push_back(ptrA);
+      active_ptrs.push_back(ptrA);
+      break;
+    }
+    case 'x':
+    {
+      Alien* ptrX = new Alien(id, pt);
+      alien_ptrs.push_back(ptrX);
+      object_ptrs.push_back(ptrX);
+      active_ptrs.push_back(ptrX);
+      break;
+    }
+  }
 }

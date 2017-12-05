@@ -6,13 +6,14 @@
 #include <list>
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 
 class Model
 {
 private:
   Model(const Model& m); // private copy constructor so it cannot be used
 
-  int time;
+  int timer;
   int count_down;
   int alive; // tracks how many astronauts are alive
 
@@ -34,6 +35,8 @@ public:
   bool update();
   void display(View &view);
   void show_status();
+
+  void handle_new_command();
 };
 
 #endif

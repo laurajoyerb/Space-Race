@@ -53,7 +53,14 @@ void Game_Object::show_status()
 void Game_Object::drawself(char* ptr)
 {
   *ptr = display_code;
-  *(ptr+1) = '0' + id_num; // '0' + id_num converts id_num to char to store in ptr
+  if (id_num > 9)
+  {
+    *(ptr+1) = '*'; // for id numbers with two digits
+  }
+  else
+  {
+    *(ptr+1) = '0' + id_num; // '0' + id_num converts id_num to char to store in ptr
+  }
 }
 
 bool Game_Object::update()
