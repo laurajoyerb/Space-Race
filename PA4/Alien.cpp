@@ -96,7 +96,8 @@ bool Alien::update()
         }
         else
         {
-          cout << display_code << id_num << ": I triumph!" << endl;
+          cout << display_code << id_num << ": I win." << endl;
+          // attack_strength++;
           state = 's';
           return true;
         }
@@ -123,7 +124,7 @@ void Alien::show_status()
       cout << " is stopped." << endl;
       break;
     case 'a':
-      cout << " attacking astronaut " << target -> get_id() << endl;
+      cout << " attacking astronaut A" << target -> get_id() << endl;
       break;
   }
 }

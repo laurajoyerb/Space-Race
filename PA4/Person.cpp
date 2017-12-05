@@ -98,6 +98,7 @@ void Person::take_hit(int attack_strength)
   else if (health < 3)
   {
     display_code = tolower(display_code);
+    cout << display_code << id_num << ": Ouch!" << endl;
   }
   else
   {
@@ -122,22 +123,29 @@ void Person::go_to_station(Space_Station*)
 
 bool Person::update_location()
 {
+  if(delta.x == 0 && delta.y == 0)
+  {
+    return true;
+  }
   Cart_Vector newdist = destination - location;
   newdist.x = fabs(newdist.x);
   newdist.y = fabs(newdist.y); // fabs gets distance from destination
-
-  if (newdist.x <= fabs(delta.x) && newdist.y <= fabs(delta.y)) // if distance is less than delta, you have arrived!
+  if(newdist.x != 0 || newdist.y != 0)
   {
-    location = destination;
-    cout << display_code << id_num << ": I'm there!" << endl;
-    return true;
+    if (newdist.x <= fabs(delta.x) && newdist.y <= fabs(delta.y)) // if distance is less than delta, you have arrived!
+    {
+      location = destination;
+      cout << display_code << id_num << ": I'm there!" << endl;
+      return true;
+    }
+    else
+    { // otherwise, add delta and continue
+      location = location + delta;
+      cout << display_code << id_num << ": step..." << endl;
+      return false;
+    }
   }
-  else
-  { // otherwise, add delta and continue
-    location = location + delta;
-    cout << display_code << id_num << ": step..." << endl;
-    return false;
-  }
+  return false;
 }
 
 void Person::setup_destination(Cart_Point dest)

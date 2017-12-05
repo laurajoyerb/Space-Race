@@ -242,16 +242,19 @@ bool Model::update()
   bool tempStation = false; // Temporary check used for atStation
   for (list <Person*>::iterator it = person_ptrs.begin(); it != person_ptrs.end(); ++it)
   {
-    for (list <Space_Station*>::iterator it2 = station_ptrs.begin(); it2 != station_ptrs.end() && atStation; ++it2)
+    if ((*it) -> is_alive()) // only checks for living astronauts
     {
-      // Each person loops through each station before looping to next person
-      Cart_Point personloc = (*it) -> get_location();
-      Cart_Point stationloc = (*it2) -> get_location();
-
-      if((personloc.x == stationloc.x) && (personloc.y == stationloc.y) && ((*it) -> get_state() == 'l'))
+      for (list <Space_Station*>::iterator it2 = station_ptrs.begin(); it2 != station_ptrs.end() && atStation; ++it2)
       {
-        tempStation = true; // if astronaut is at same location as the station AND is locked there, temp is set to true
-      } // If the astronaut is not at any of the station locations, temp stays false
+        // Each person loops through each station before looping to next person
+        Cart_Point personloc = (*it) -> get_location();
+        Cart_Point stationloc = (*it2) -> get_location();
+
+        if((personloc.x == stationloc.x) && (personloc.y == stationloc.y) && ((*it) -> get_state() == 'l'))
+        {
+          tempStation = true; // if astronaut is at same location as the station AND is locked there, temp is set to true
+        } // If the astronaut is not at any of the station locations, temp stays false
+      }
     }
     if (!tempStation) // if temp is false (one or more astronauts are not at a station), atStation is false
     {
@@ -261,16 +264,16 @@ bool Model::update()
   }
 
   bool allAstro = true; // Checks that every station has at least one astronaut
-  int missing = 0; // Counts number of astronauts that are missing (as in how many space stations are missing an astronaut)
+  int missing = 0;
   for (list <Space_Station*>::iterator it = station_ptrs.begin(); it != station_ptrs.end(); ++it)
   {
+    missing += (*it) -> get_astronauts();
     if ((*it) -> get_astronauts() < 1)
     {
       allAstro = false; // if ANY station does not have at least one astronaut, allAstro is false
-      missing++; // increments to show that aother station is missing an astronaut
     }
   }
-
+  missing = alive - missing;
   bool check = false; // return value for whole update function
 
   if(!upgraded) // Case 1: Space Stations are not upgraded yet
