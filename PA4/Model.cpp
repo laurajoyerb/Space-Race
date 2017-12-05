@@ -123,55 +123,55 @@ Space_Station* Model::get_Space_Station_ptr(int id)
 bool Model::update()
 {
   timer++; // Increments time always
-  srand(timer);
-  int gravity = rand() % 10; // generates integers from 0-9
-
-  // Three values are picked to change gravity (gravity changes 3/10 of the time)
-  if (gravity == 0)
-  {
-    if(person_ptrs.front() -> speed != 2.5)
-    {
-      cout << "Gravity is now greater!" << endl;
-      for (list <Person*>::iterator it = person_ptrs.begin(); it != person_ptrs.end(); ++it)
-      {
-        (*it) -> speed = 2.5;
-      }
-      for (list <Alien*>::iterator it = alien_ptrs.begin(); it != alien_ptrs.end(); ++it)
-      {
-        (*it) -> speed = 2.5;
-      }
-    }
-  }
-  else if (gravity == 1)
-  {
-    if(person_ptrs.front() -> speed != 5)
-    {
-      cout << "Gravity is back to normal!" << endl;
-      for (list <Person*>::iterator it = person_ptrs.begin(); it != person_ptrs.end(); ++it)
-      {
-        (*it) -> speed = 5;
-      }
-      for (list <Alien*>::iterator it = alien_ptrs.begin(); it != alien_ptrs.end(); ++it)
-      {
-        (*it) -> speed = 2.5;
-      }
-    }
-  }
-  else if (gravity == 2)
-  {
-    if(person_ptrs.front() -> speed != 10)
-    {
-      cout << "Gravity is now less!" << endl;
-      for (list <Person*>::iterator it = person_ptrs.begin(); it != person_ptrs.end(); ++it)
-      {
-        (*it) -> speed = 10;
-      }
-      for (list <Alien*>::iterator it = alien_ptrs.begin(); it != alien_ptrs.end(); ++it)
-      {
-        (*it) -> speed = 2.5;
-      }
-    }
-  }
+  // srand(timer);
+  // int gravity = rand() % 10; // generates integers from 0-9
+  //
+  // // Three values are picked to change gravity (gravity changes 3/10 of the time)
+  // if (gravity == 0)
+  // {
+  //   if(person_ptrs.front() -> speed != 2.5)
+  //   {
+  //     cout << "Gravity is now greater!" << endl;
+  //     for (list <Person*>::iterator it = person_ptrs.begin(); it != person_ptrs.end(); ++it)
+  //     {
+  //       (*it) -> speed = 2.5;
+  //     }
+  //     for (list <Alien*>::iterator it = alien_ptrs.begin(); it != alien_ptrs.end(); ++it)
+  //     {
+  //       (*it) -> speed = 2.5;
+  //     }
+  //   }
+  // }
+  // else if (gravity == 1)
+  // {
+  //   if(person_ptrs.front() -> speed != 5)
+  //   {
+  //     cout << "Gravity is back to normal!" << endl;
+  //     for (list <Person*>::iterator it = person_ptrs.begin(); it != person_ptrs.end(); ++it)
+  //     {
+  //       (*it) -> speed = 5;
+  //     }
+  //     for (list <Alien*>::iterator it = alien_ptrs.begin(); it != alien_ptrs.end(); ++it)
+  //     {
+  //       (*it) -> speed = 2.5;
+  //     }
+  //   }
+  // }
+  // else if (gravity == 2)
+  // {
+  //   if(person_ptrs.front() -> speed != 10)
+  //   {
+  //     cout << "Gravity is now less!" << endl;
+  //     for (list <Person*>::iterator it = person_ptrs.begin(); it != person_ptrs.end(); ++it)
+  //     {
+  //       (*it) -> speed = 10;
+  //     }
+  //     for (list <Alien*>::iterator it = alien_ptrs.begin(); it != alien_ptrs.end(); ++it)
+  //     {
+  //       (*it) -> speed = 2.5;
+  //     }
+  //   }
+  // }
 
   alive = 0;
 
@@ -242,13 +242,17 @@ bool Model::update()
   bool tempStation = false; // Temporary check used for atStation
   for (list <Person*>::iterator it = person_ptrs.begin(); it != person_ptrs.end(); ++it)
   {
+    cout << "Person " << (*it) -> get_id() << " Alive bool: " << (*it) -> is_alive() << endl;
     if ((*it) -> is_alive()) // only checks for living astronauts
     {
-      for (list <Space_Station*>::iterator it2 = station_ptrs.begin(); it2 != station_ptrs.end() && atStation; ++it2)
+      for (list <Space_Station*>::iterator it2 = station_ptrs.begin(); it2 != station_ptrs.end(); ++it2)
       {
         // Each person loops through each station before looping to next person
         Cart_Point personloc = (*it) -> get_location();
         Cart_Point stationloc = (*it2) -> get_location();
+
+        cout << "Person " << (*it) -> get_id() << " location: " << personloc << endl;
+        cout << "Space_Station " << (*it2) -> get_id() << " location: " << stationloc << endl;
 
         if((personloc.x == stationloc.x) && (personloc.y == stationloc.y) && ((*it) -> get_state() == 'l'))
         {
@@ -260,7 +264,11 @@ bool Model::update()
     {
       atStation = false;
     }
-    // If after looping through every person temp is never false, then atStation remains true
+    else
+    {
+      atStation = true;
+    }
+    // If after looping through every person, temp is never false, then atStation remains true
   }
 
   bool allAstro = true; // Checks that every station has at least one astronaut
@@ -292,6 +300,8 @@ bool Model::update()
   {
     cout << "Ready for takeoff? " << count_down << "..." << endl;
     cout << "Missing " << missing << " astronauts!" << endl;
+    cout << "allAstro: " << allAstro << endl;
+    cout << "atStation: " << atStation << endl;
     count_down--; // countdown begins
 
     if (count_down <= 0) // If take off happened / count down ended, you lose
