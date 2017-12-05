@@ -3,6 +3,7 @@
 
 #include "View.h"
 #include "Alien.h"
+#include <list>
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -15,16 +16,12 @@ private:
   int count_down;
   int alive; // tracks how many astronauts are alive
 
-  Game_Object* object_ptrs[10];
-  int num_objects;
-  Person* person_ptrs[10];
-  int num_persons;
-  Alien* alien_ptrs[10];
-  int num_aliens;
-  Oxygen_Depot* depot_ptrs[10];
-  int num_depots;
-  Space_Station* station_ptrs[10];
-  int num_station;
+  list <Game_Object*> object_ptrs;
+  list <Game_Object*> active_ptrs;
+  list <Person*> person_ptrs;
+  list <Alien*> alien_ptrs;
+  list <Oxygen_Depot*> depot_ptrs;
+  list <Space_Station*> station_ptrs;
 
 public:
   Model();

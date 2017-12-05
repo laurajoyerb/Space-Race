@@ -8,13 +8,7 @@ Model::Model()
   time = 0;
   count_down = 10;
 
-  num_objects = 8;
-  num_persons = 2;
-  num_aliens = 2;
-  num_depots = 2;
-  num_station = 2;
-
-  alive = num_persons;
+  alive = 2;
 
   Cart_Point pt1 = Cart_Point(5,1);
   Cart_Point pt2 = Cart_Point(10,1);
@@ -36,46 +30,55 @@ Model::Model()
   Space_Station* ptrS1 = new Space_Station();
   Space_Station* ptrS2 = new Space_Station(pt5, 2);
 
-  object_ptrs[0] = ptrA1;
-  object_ptrs[1] = ptrA2;
-  object_ptrs[2] = ptrD1;
-  object_ptrs[3] = ptrD2;
-  object_ptrs[4] = ptrS1;
-  object_ptrs[5] = ptrS2;
-  object_ptrs[6] = ptrX1;
-  object_ptrs[7] = ptrX2;
+  object_ptrs.push_back(ptrA1);
+  object_ptrs.push_back(ptrA2);
+  object_ptrs.push_back(ptrD1);
+  object_ptrs.push_back(ptrD2);
+  object_ptrs.push_back(ptrS1);
+  object_ptrs.push_back(ptrS2);
+  object_ptrs.push_back(ptrX1);
+  object_ptrs.push_back(ptrX2);
 
-  person_ptrs[0] = ptrA1;
-  person_ptrs[1] = ptrA2;
+  active_ptrs.push_back(ptrA1);
+  active_ptrs.push_back(ptrA2);
+  active_ptrs.push_back(ptrD1);
+  active_ptrs.push_back(ptrD2);
+  active_ptrs.push_back(ptrS1);
+  active_ptrs.push_back(ptrS2);
+  active_ptrs.push_back(ptrX1);
+  active_ptrs.push_back(ptrX2);
 
-  depot_ptrs[0] = ptrD1;
-  depot_ptrs[1] = ptrD2;
+  person_ptrs.push_back(ptrA1);
+  person_ptrs.push_back(ptrA2);
 
-  station_ptrs[0] = ptrS1;
-  station_ptrs[1] = ptrS2;
+  depot_ptrs.push_back(ptrD1);
+  depot_ptrs.push_back(ptrD2);
 
-  alien_ptrs[0] = ptrX1;
-  alien_ptrs[1] = ptrX2;
+  station_ptrs.push_back(ptrS1);
+  station_ptrs.push_back(ptrS2);
+
+  alien_ptrs.push_back(ptrX1);
+  alien_ptrs.push_back(ptrX2);
 
   cout << "Model default constructed" << endl;
 }
 
 Model::~Model()
 {
-  for (int i = 0; i < num_objects; i++)
+  for (list <Game_Object*>::iterator it = object_ptrs.begin(); it != object_ptrs.end(); ++it)
   {
-    delete object_ptrs[i]; // object_ptrs holds all ptrs, so only this must be deleted (not other pointer arrays like person_ptrs)
+    delete *it; // object_ptrs holds all ptrs, so only this must be deleted (not other pointer arrays like person_ptrs)
   }
   cout << "Model destructed." << endl;
 }
 
 Person* Model::get_Person_ptr(int id)
 {
-  for (int i = 0; i < num_persons; i++)
+  for (list <Person*>::iterator it = person_ptrs.begin(); it != person_ptrs.end(); ++it)
   {
-    if(person_ptrs[i] -> get_id() == id)
+    if((*it) -> get_id() == id)
     {
-      return person_ptrs[i];
+      return *it;
     }
   }
   return 0;
@@ -83,11 +86,11 @@ Person* Model::get_Person_ptr(int id)
 
 Alien* Model::get_Alien_ptr(int id)
 {
-  for (int i = 0; i < num_aliens; i++)
+  for (list <Alien*>::iterator it = alien_ptrs.begin(); it != alien_ptrs.end(); ++it)
   {
-    if(alien_ptrs[i] -> get_id() == id)
+    if((*it) -> get_id() == id)
     {
-      return alien_ptrs[i];
+      return *it;
     }
   }
   return 0;
@@ -95,11 +98,11 @@ Alien* Model::get_Alien_ptr(int id)
 
 Oxygen_Depot* Model::get_Oxygen_Depot_ptr(int id)
 {
-  for (int i = 0; i < num_depots; i++)
+  for (list <Oxygen_Depot*>::iterator it = depot_ptrs.begin(); it != depot_ptrs.end(); ++it)
   {
-    if(depot_ptrs[i] -> get_id() == id)
+    if((*it) -> get_id() == id)
     {
-      return depot_ptrs[i];
+      return *it;
     }
   }
   return 0;
@@ -107,11 +110,11 @@ Oxygen_Depot* Model::get_Oxygen_Depot_ptr(int id)
 
 Space_Station* Model::get_Space_Station_ptr(int id)
 {
-  for (int i = 0; i < num_station; i++)
+  for (list <Space_Station*>::iterator it = station_ptrs.begin(); it != station_ptrs.end(); ++it)
   {
-    if(station_ptrs[i] -> get_id() == id)
+    if((*it) -> get_id() == id)
     {
-      return station_ptrs[i];
+      return *it;
     }
   }
   return 0;
@@ -122,9 +125,18 @@ bool Model::update()
   time++; // Increments time always
 
   alive = 0;
-  for (int i = 0; i < num_persons; i++)
+
+  for (list <Game_Object*>::iterator it = active_ptrs.begin(); it != active_ptrs.end(); ++it)
   {
-    if (person_ptrs[i] -> is_alive())
+    if ((*it) -> get_state() == 'x')
+    {
+      active_ptrs.erase(it);
+    }
+  }
+
+  for (list <Person*>::iterator it = person_ptrs.begin(); it != person_ptrs.end(); ++it)
+  {
+    if ((*it) -> is_alive())
     {
       alive++;
     }
@@ -132,10 +144,9 @@ bool Model::update()
 
   bool upgraded = true; // Checks if ALL stations are upgraded
 
-  for (int i = 0; i < num_station && upgraded; i++)
+  for (list <Space_Station*>::iterator it = station_ptrs.begin(); it != station_ptrs.end() && upgraded; ++it)
   {
-    if (station_ptrs[i] -> get_state() == 'u') continue; // if ALL stations are upgraded, bool remains true
-    else
+    if ((*it) -> get_state() != 'u') // if ALL stations are upgraded, bool remains true
     {
       upgraded = false; // if ANY station is not upgraded, this bool is set to false and for loop stops
     }
@@ -143,15 +154,15 @@ bool Model::update()
 
   bool atStation = true; // Checks that all astronauts are at a station
   bool tempStation = false; // Temporary check used for atStation
-  for (int i = 0; i < num_persons && atStation; i++)
+  for (list <Person*>::iterator it = person_ptrs.begin(); it != person_ptrs.end(); ++it)
   {
-    for (int j = 0; j < num_station && atStation; j++)
+    for (list <Space_Station*>::iterator it2 = station_ptrs.begin(); it2 != station_ptrs.end() && atStation; ++it2)
     {
       // Each person loops through each station before looping to next person
-      Cart_Point personloc = person_ptrs[i] -> get_location();
-      Cart_Point stationloc = station_ptrs[j] -> get_location();
+      Cart_Point personloc = (*it) -> get_location();
+      Cart_Point stationloc = (*it2) -> get_location();
 
-      if((personloc.x == stationloc.x) && (personloc.y == stationloc.y) && (person_ptrs[i] -> get_state() == 'l'))
+      if((personloc.x == stationloc.x) && (personloc.y == stationloc.y) && ((*it) -> get_state() == 'l'))
       {
         tempStation = true; // if astronaut is at same location as the station AND is locked there, temp is set to true
       } // If the astronaut is not at any of the station locations, temp stays false
@@ -165,10 +176,9 @@ bool Model::update()
 
   bool allAstro = true; // Checks that every station has at least one astronaut
   int missing = 0; // Counts number of astronauts that are missing (as in how many space stations are missing an astronaut)
-  for (int i = 0; i < num_station; i++)
+  for (list <Space_Station*>::iterator it = station_ptrs.begin(); it != station_ptrs.end(); ++it)
   {
-    if (station_ptrs[i] -> get_astronauts() >= 1) continue;
-    else
+    if ((*it) -> get_astronauts() < 1)
     {
       allAstro = false; // if ANY station does not have at least one astronaut, allAstro is false
       missing++; // increments to show that aother station is missing an astronaut
@@ -180,9 +190,9 @@ bool Model::update()
   if(!upgraded) // Case 1: Space Stations are not upgraded yet
   { // Executes "normally"; all objects are updated, and if any update function returns true, Model::update returns true as well
     bool temp;
-    for (int i = 0; i < num_objects; i++)
+    for (list <Game_Object*>::iterator it = active_ptrs.begin(); it != active_ptrs.end(); ++it)
     {
-      temp = object_ptrs[i] -> update();
+      temp = (*it) -> update();
       if (temp)
       {
         check = true;
@@ -203,9 +213,9 @@ bool Model::update()
 
     // Updates all objects because astronauts are still moving around!
     bool temp;
-    for (int i = 0; i < num_objects; i++)
+    for (list <Game_Object*>::iterator it = active_ptrs.begin(); it != active_ptrs.end(); ++it)
     {
-      temp = object_ptrs[i] -> update();
+      temp = (*it) -> update();
       if (temp)
       {
         check = true;
@@ -225,9 +235,9 @@ bool Model::update()
 void Model::show_status()
 {
   cout << "Time: " << time << endl;
-  for (int i = 0; i < num_objects; i++)
+  for (list <Game_Object*>::iterator it = object_ptrs.begin(); it != object_ptrs.end(); ++it)
   {
-    object_ptrs[i] -> show_status();
+    (*it) -> show_status();
   }
 }
 
@@ -235,12 +245,9 @@ void Model::display(View& view)
 {
   view.clear();
 
-  for (int i = 0; i < num_objects; i++)
+  for (list <Game_Object*>::iterator it = active_ptrs.begin(); it != active_ptrs.end(); ++it)
   {
-    if (object_ptrs[i] -> get_state() != 'x')
-    {
-      view.plot(object_ptrs[i]); // plots each object on display
-    }
+      view.plot((*it)); // plots each object on display
   }
 
   view.draw();
