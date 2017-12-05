@@ -10,7 +10,7 @@ void do_move_command(Model& model)
   char ax;
 
   cin >> id >> x >> y;
-
+  
   cout << "Move Astronaut (enter 'a') or Alien (enter 'x'): ";
   cin >> ax;
 

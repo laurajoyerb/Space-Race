@@ -32,68 +32,76 @@ int main()
 
     cout << "Enter a command: ";
 
-    cin >> command; // first command is taken here, all others are taken inside Game_Command functions
-    switch (command)
+    try
     {
-      case 'm':
+      cin >> command; // first command is taken here, all others are taken inside Game_Command functions
+
+      switch (command)
       {
-        do_move_command(m);
-        show = false;
-        break;
+        case 'm':
+        {
+          do_move_command(m);
+          show = false;
+          break;
+        }
+        case 'w':
+        {
+          do_work_command(m);
+          show = false;
+          break;
+        }
+        case 'd':
+        {
+          do_deposit_command(m);
+          show = false;
+          break;
+        }
+        case 's':
+        {
+          do_stop_command(m);
+          show = false;
+          break;
+        }
+        case 'l':
+        {
+          do_lock_command(m);
+          show = false;
+          break;
+        }
+        case 'g':
+        {
+          do_go_command(m);
+          show = true;
+          break;
+        }
+        case 'r':
+        {
+          do_run_command(m);
+          show = true;
+          break;
+        }
+        case 'a':
+        {
+          do_attack_command(m);
+          show = false;
+          break;
+        }
+        case 'q':
+        {
+          do_quit_command(m);
+          break;
+        }
+        default: // Executes for invalid command codes
+        {
+          cout << "ERROR: Please enter a valid command!" << endl;
+          show = false; // invalid flag
+          break;
+        }
       }
-      case 'w':
-      {
-        do_work_command(m);
-        show = false;
-        break;
-      }
-      case 'd':
-      {
-        do_deposit_command(m);
-        show = false;
-        break;
-      }
-      case 's':
-      {
-        do_stop_command(m);
-        show = false;
-        break;
-      }
-      case 'l':
-      {
-        do_lock_command(m);
-        show = false;
-        break;
-      }
-      case 'g':
-      {
-        do_go_command(m);
-        show = true;
-        break;
-      }
-      case 'r':
-      {
-        do_run_command(m);
-        show = true;
-        break;
-      }
-      case 'a':
-      {
-        do_attack_command(m);
-        show = false;
-        break;
-      }
-      case 'q':
-      {
-        do_quit_command(m);
-        break;
-      }
-      default: // Executes for invalid command codes
-      {
-        cout << "ERROR: Please enter a valid command!" << endl;
-        show = false; // invalid flag
-        break;
-      }
+    }
+    catch(Invalid_Input& except)
+    {
+      cout << "Invalid input - " << except.msg_ptr << endl;
     }
     if (show)
     {
