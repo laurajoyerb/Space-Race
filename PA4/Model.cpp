@@ -129,26 +129,47 @@ bool Model::update()
   // Three values are picked to change gravity (gravity changes 3/10 of the time)
   if (gravity == 0)
   {
-    cout << "Gravity is now greater!" << endl;
-    for (list <Person*>::iterator it = person_ptrs.begin(); it != person_ptrs.end(); ++it)
+    if(person_ptrs.front() -> speed != 2.5)
     {
-      (*it) -> speed = 2.5;
+      cout << "Gravity is now greater!" << endl;
+      for (list <Person*>::iterator it = person_ptrs.begin(); it != person_ptrs.end(); ++it)
+      {
+        (*it) -> speed = 2.5;
+      }
+      for (list <Alien*>::iterator it = alien_ptrs.begin(); it != alien_ptrs.end(); ++it)
+      {
+        (*it) -> speed = 2.5;
+      }
     }
   }
   else if (gravity == 1)
   {
-    cout << "Gravity is normal!" << endl;
-    for (list <Person*>::iterator it = person_ptrs.begin(); it != person_ptrs.end(); ++it)
+    if(person_ptrs.front() -> speed != 5)
     {
-      (*it) -> speed = 5;
+      cout << "Gravity is back to normal!" << endl;
+      for (list <Person*>::iterator it = person_ptrs.begin(); it != person_ptrs.end(); ++it)
+      {
+        (*it) -> speed = 5;
+      }
+      for (list <Alien*>::iterator it = alien_ptrs.begin(); it != alien_ptrs.end(); ++it)
+      {
+        (*it) -> speed = 2.5;
+      }
     }
   }
   else if (gravity == 2)
   {
-    cout << "Gravity is now less!" << endl;
-    for (list <Person*>::iterator it = person_ptrs.begin(); it != person_ptrs.end(); ++it)
+    if(person_ptrs.front() -> speed != 10)
     {
-      (*it) -> speed = 10;
+      cout << "Gravity is now less!" << endl;
+      for (list <Person*>::iterator it = person_ptrs.begin(); it != person_ptrs.end(); ++it)
+      {
+        (*it) -> speed = 10;
+      }
+      for (list <Alien*>::iterator it = alien_ptrs.begin(); it != alien_ptrs.end(); ++it)
+      {
+        (*it) -> speed = 2.5;
+      }
     }
   }
 
@@ -169,6 +190,43 @@ bool Model::update()
       alive++;
     }
   }
+
+  if (compMode)
+  {
+    // Control of aliens
+    bool attack = false;
+    for (list <Alien*>::iterator it = alien_ptrs.begin(); it != alien_ptrs.end(); ++it)
+    {
+      (*it) -> compMode = true;
+      if (((*it) -> get_state() != 'a') && ((*it) -> get_state() != 'm'))
+      {
+        for (list <Person*>::iterator it2 = person_ptrs.begin(); it2 != person_ptrs.end(); ++it2)
+        {
+          Cart_Point AlienLoc = (*it) -> get_location();
+          Cart_Point AstroLoc = (*it2) -> get_location();
+          double dist = cart_distance(AlienLoc, AstroLoc);
+
+          if ((*it2) -> is_alive() && dist < (*it) -> range)
+          {
+            (*it) -> start_attack(*it2);
+            attack = true;
+          }
+        }
+        if(!attack)
+        {
+          for (list <Person*>::iterator it2 = person_ptrs.begin(); it2 != person_ptrs.end(); ++it2)
+          {
+            if ((*it2) -> is_alive())
+            {
+              Cart_Point dest = (*it2) -> get_location();
+              (*it) -> start_moving(dest);
+            }
+          }
+        }
+      }
+    }
+  }
+
 
   bool upgraded = true; // Checks if ALL stations are upgraded
 

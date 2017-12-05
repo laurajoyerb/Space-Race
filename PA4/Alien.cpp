@@ -30,11 +30,20 @@ void Alien::start_attack(Person* in_target)
 
   if (dist <= range)
   {
-    cout << display_code << id_num << ": Smash!" << endl;
-    target = in_target;
-    state = 'a';
+    if (state == 'a')
+    {
+      cout << display_code << id_num << ": Take that!" << endl;
+      in_target -> take_hit(attack_strength);
+    }
+    else
+    {
+      cout << display_code << id_num << ": Smash!" << endl;
+      target = in_target;
+      state = 'a';
+    }
   }
-  else
+
+  if (!compMode && dist > range)
   {
     cout << display_code << id_num << ": Target is out of range" << endl;
   }
@@ -69,7 +78,10 @@ bool Alien::update()
       double dist = cart_distance(AlienLoc, AstroLoc);
       if (dist > range)
       {
-        cout << display_code << id_num << ": Target is out of range" << endl;
+        if(!compMode)
+        {
+          cout << display_code << id_num << ": Target is out of range" << endl;
+        }
         cout << display_code << id_num << ": Chaaaaarge." << endl;
         state = 's';
         return true;

@@ -9,9 +9,7 @@ class Alien : public Game_Object
 {
 private:
   int attack_strength;
-  double range;
   Person* target;
-  double speed;
   Cart_Point destination;
   Cart_Vector delta;
 
@@ -25,6 +23,10 @@ public:
   void stop();
   bool update_location();
   void setup_destination(Cart_Point);
+
+  double speed;
+  double range;
+  bool compMode;
 };
 
 #endif

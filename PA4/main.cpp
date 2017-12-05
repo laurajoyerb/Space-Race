@@ -21,6 +21,19 @@ int main()
 
   View v = View();
 
+  char mode;
+  cout << "Would you like to play in Normal Mode (n) or in Computer Mode (c)? ";
+  cin >> mode;
+
+  if (mode == 'n')
+  {
+    m.compMode = false;
+  }
+  else if (mode == 'c')
+  {
+    m.compMode = true;
+  }
+
   // Begins game with statuses of all objects and the initial display and time
   m.show_status();
   m.display(v);

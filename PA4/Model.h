@@ -37,6 +37,8 @@ public:
   void show_status();
 
   void handle_new_command();
+
+  bool compMode;
 };
 
 #endif

@@ -17,16 +17,23 @@ void do_move_command(Model& model)
     cin.ignore(numeric_limits<streamsize>::max());
   }
 
-  cout << "Move Astronaut (enter 'a') or Alien (enter 'x'): ";
-  cin >> ax;
-
-  while (ax != 'x' && ax != 'a')
-  {
-    cout << "Please enter 'a' for Astronaut or 'x' for Alien: ";
-    cin >> ax;
-  }
-
   Cart_Point pt = Cart_Point(x,y);
+
+  if(model.compMode)
+  {
+    ax = 'a';
+  }
+  else
+  {
+    cout << "Move Astronaut (enter 'a') or Alien (enter 'x'): ";
+    cin >> ax;
+
+    while (ax != 'x' && ax != 'a')
+    {
+      cout << "Please enter 'a' for Astronaut or 'x' for Alien: ";
+      cin >> ax;
+    }
+  }
 
   if (ax == 'a')
   {
@@ -109,13 +116,20 @@ void do_stop_command(Model& model)
 
   cin >> id;
 
-  cout << "Move Astronaut (enter 'a') or Alien (enter 'x'): ";
-  cin >> ax;
-
-  while (ax != 'x' && ax != 'a')
+  if(model.compMode)
   {
-    cout << "Please enter 'a' for Astronaut or 'x' for Alien: ";
+    ax = 'a';
+  }
+  else
+  {
+    cout << "Move Astronaut (enter 'a') or Alien (enter 'x'): ";
     cin >> ax;
+
+    while (ax != 'x' && ax != 'a')
+    {
+      cout << "Please enter 'a' for Astronaut or 'x' for Alien: ";
+      cin >> ax;
+    }
   }
 
   if (ax == 'a')
