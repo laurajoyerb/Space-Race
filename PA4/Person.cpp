@@ -92,7 +92,7 @@ void Person::take_hit(int attack_strength)
   health -= attack_strength;
   if (health <= 0)
   {
-    cout << "Gasp! I'm dying..." << endl;
+    cout << display_code << id_num << ": Gasp! I'm dying..." << endl;
     state = 'x';
   }
   else if (health < 3)

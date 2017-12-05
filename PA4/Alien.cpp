@@ -28,10 +28,6 @@ void Alien::start_attack(Person* in_target)
   Cart_Point AstroLoc = in_target -> get_location();
   double dist = cart_distance(AlienLoc, AstroLoc);
 
-  cout << "Alien location: " << AlienLoc << endl;
-  cout << "Person location: " << AstroLoc << endl;
-  cout << "Distance between pts: " << dist << endl;
-
   if (dist <= range)
   {
     cout << display_code << id_num << ": Smash!" << endl;
@@ -40,7 +36,7 @@ void Alien::start_attack(Person* in_target)
   }
   else
   {
-    cout << "Target is out of range" << endl;
+    cout << display_code << id_num << ": Target is out of range" << endl;
   }
 }
 
@@ -73,9 +69,10 @@ bool Alien::update()
       double dist = cart_distance(AlienLoc, AstroLoc);
       if (dist > range)
       {
-        cout << "Target is out of range" << endl;
+        cout << display_code << id_num << ": Target is out of range" << endl;
+        cout << display_code << id_num << ": Chaaaaarge." << endl;
         state = 's';
-        return false;
+        return true;
       }
       else
       {

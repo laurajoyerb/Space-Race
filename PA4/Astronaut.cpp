@@ -63,7 +63,7 @@ bool Astronaut::update()
           if (amount_oxygen <= 0) // if the astronaut runs out of oxygen, it is locked
           {
             state = 'x';
-            cout << "I can't move, I'm out of oxygen." << endl;
+            cout << "I'm out of oxygen. I'm dying!" << endl;
             return true;
           }
           else
@@ -89,7 +89,7 @@ bool Astronaut::update()
           if (amount_oxygen <= 0)
           {
             state = 'x';
-            cout << "I can't move. I'm out of oxygen" << endl;
+            cout << "I'm out of oxygen. I'm dying!" << endl;
             return true;
           }
           else
@@ -123,7 +123,7 @@ bool Astronaut::update()
           if (amount_oxygen <= 0)
           {
             state = 'x';
-            cout << "I can't move. I'm out of oxygen" << endl;
+            cout << "I'm out of oxygen. I'm dying!" << endl;
             return true;
           }
           else
