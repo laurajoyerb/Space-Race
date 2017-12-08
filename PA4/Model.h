@@ -17,6 +17,7 @@ private:
   int count_down;
   int alive; // tracks how many astronauts are alive
 
+  // Lists instead of arrays
   list <Game_Object*> object_ptrs;
   list <Game_Object*> active_ptrs;
   list <Person*> person_ptrs;
@@ -38,7 +39,7 @@ public:
 
   void handle_new_command();
 
-  bool compMode;
+  bool compMode; // Tracks whether or not the program aliens are run by the computer or by the user
 };
 
 #endif

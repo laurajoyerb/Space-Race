@@ -53,6 +53,7 @@ bool Oxygen_Depot::update()
   if (isempty() && state != 'e') // executes if it hasn't already been set to empty
   {
     state = 'e';
+    cout << "Oxygen Depot " << id_num << " has been depleted." << endl;
     display_code = 'o';
     return true;
   }

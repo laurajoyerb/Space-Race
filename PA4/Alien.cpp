@@ -8,7 +8,7 @@ Alien::Alien() : Game_Object('X')
 {
   attack_strength = 2;
   range = 2.0;
-  health = 5.0;
+  health = 5.0; // EXTRA CREDIT
   target = NULL;
   speed = 5;
   cout << "Default Alien constructed" << endl;
@@ -18,7 +18,7 @@ Alien::Alien(int in_id, Cart_Point in_loc) : Game_Object(in_loc, in_id, 'X')
 {
   attack_strength = 2;
   range = 2.0;
-  health = 5.0;
+  health = 5.0; // EXTRA CREDIT
   target = NULL;
   speed = 5;
   cout << "Alien constructed" << endl;
@@ -32,20 +32,20 @@ void Alien::start_attack(Person* in_target)
 
   if (dist <= range)
   {
-    if (state == 'a')
+    if (state == 'a') // If already in attack mode, the code executes without an interruption in attacking; ie. still calls take_hit() and attacks alien
     {
       cout << display_code << id_num << ": Take that!" << endl;
       in_target -> take_hit(attack_strength);
     }
     else
     {
-      cout << display_code << id_num << ": Smash!" << endl;
+      cout << display_code << id_num << ": Smash!" << endl; // First start_attack does not actually cause damage to astronaut
       target = in_target;
       state = 'a';
     }
   }
 
-  if (!compMode && dist > range)
+  if (!compMode && dist > range) // If in computer-controlled mode, no output is necessary
   {
     cout << display_code << id_num << ": Target is out of range" << endl;
   }
@@ -54,7 +54,7 @@ void Alien::start_attack(Person* in_target)
 bool Alien::update()
 {
   bool arrive;
-  if (state == 'x')
+  if (state == 'x') // EXTRA CREDIT
   {
     return false;
   }
@@ -84,7 +84,7 @@ bool Alien::update()
       double dist = cart_distance(AlienLoc, AstroLoc);
       if (dist > range)
       {
-        if(!compMode)
+        if(!compMode) // Only prints for user commands to alien
         {
           cout << display_code << id_num << ": Target is out of range" << endl;
         }
@@ -110,7 +110,7 @@ bool Alien::update()
     }
     default:
     {
-      cout << "Something messed up!" << endl;
+      cout << "Something messed up!" << endl; // Should never execute!
       return false;
     }
   }
@@ -131,7 +131,7 @@ void Alien::show_status()
     case 'a':
       cout << " attacking astronaut A" << target -> get_id() << endl;
       break;
-    case 'x':
+    case 'x': // EXTRA CREDIT
       cout << " is dead." << endl;
   }
 }
@@ -139,7 +139,7 @@ void Alien::show_status()
 
 void Alien::start_moving(Cart_Point dest)
 {
-  if (state == 'x' && !compMode)
+  if (state == 'x' && !compMode) // EXTRA CREDIT
   {
     cout << "I can't move, I'm dead." << endl;
   }
@@ -153,7 +153,7 @@ void Alien::start_moving(Cart_Point dest)
     {
       setup_destination(dest);
       state = 'm';
-      if (!compMode)
+      if (!compMode) // Response for user commands
       {
         cout << "Moving " << id_num << " to " << dest << endl;
         cout << display_code << id_num << ": On my way." << endl;
@@ -164,7 +164,7 @@ void Alien::start_moving(Cart_Point dest)
 
 void Alien::stop()
 {
-  if (state == 'x' && !compMode)
+  if (state == 'x' && !compMode) // EXTRA CREDIT
   {
     cout << "I can't move, I'm dead." << endl;
   }
@@ -178,7 +178,7 @@ void Alien::stop()
 bool Alien::update_location()
 {
   setup_destination(destination);
-  if(delta.x == 0 && delta.y == 0)
+  if(delta.x == 0 && delta.y == 0) // This means you are there!
   {
     return true;
   }
@@ -207,7 +207,7 @@ void Alien::setup_destination(Cart_Point dest)
   delta = cv / ((cart_distance(destination, location) / speed)); // different formula from document, still works though I promise
 }
 
-bool Alien::is_alive()
+bool Alien::is_alive() // EXTRA CREDIT
 {
   if (state == 'x')
     return false;
@@ -215,7 +215,7 @@ bool Alien::is_alive()
     return true;
 }
 
-void Alien::take_hit(int Pattack_strength)
+void Alien::take_hit(int Pattack_strength) // EXTRA CREDIT: Aliens can be damaged now
 {
   health -= Pattack_strength;
   if (health <= 0)
@@ -223,7 +223,7 @@ void Alien::take_hit(int Pattack_strength)
     cout << display_code << id_num << ": Gasp! I'm dying..." << endl;
     state = 'x';
   }
-  else if (health < 3)
+  else if (health < 3) // Same protocol as with Person
   {
     display_code = tolower(display_code);
     cout << display_code << id_num << ": Ouch!" << endl;
@@ -235,17 +235,17 @@ void Alien::take_hit(int Pattack_strength)
 }
 
 
-double Alien::get_speed()
+double Alien::get_speed() // EXTRA CREDIT
 {
   return speed;
 }
 
-double Alien::get_range()
+double Alien::get_range() // EXTRA CREDIT
 {
   return range;
 }
 
-void Alien::change_speed(double in_speed)
+void Alien::change_speed(double in_speed) // EXTRA CREDIT
 {
   speed = in_speed;
 }

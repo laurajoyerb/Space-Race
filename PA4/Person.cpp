@@ -8,9 +8,9 @@ Person::Person() : Game_Object('x')
 {
   speed = 5;
   health = 5;
-  attack_strength = 2;
-  range = 2.0;
-  target = NULL;
+  attack_strength = 2; // EXTRA CREDIT
+  range = 2.0; // EXTRA CREDIT
+  target = NULL; // EXTRA CREDIT
   cout << "Person default constructed." << endl;
 }
 
@@ -18,9 +18,9 @@ Person::Person(char in_code) : Game_Object(in_code)
 {
   speed = 5;
   health = 5;
-  range = 2.0;
-  attack_strength = 2;
-  target = NULL;
+  range = 2.0; // EXTRA CREDIT
+  attack_strength = 2; // EXTRA CREDIT
+  target = NULL; // EXTRA CREDIT
   state = 's';
   cout << "Person constructed." << endl;
 }
@@ -29,8 +29,9 @@ Person::Person(Cart_Point in_loc, int in_id, char in_code) : Game_Object(in_loc,
 {
   speed = 5;
   health = 5;
-  range = 2.0;
-  attack_strength = 2;
+  range = 2.0; // EXTRA CREDIT
+  attack_strength = 2;// EXTRA CREDIT
+  target = NULL: // EXTRA CREDIT
   cout << "Person constructed." << endl;
 }
 
@@ -164,7 +165,7 @@ void Person::setup_destination(Cart_Point dest)
   delta = cv / ((cart_distance(destination, location) / speed)); // different formula from document, still works though I promise
 }
 
-void Person::start_attack(Alien* in_target)
+void Person::start_attack(Alien* in_target) // EXTRA CREDIT: Astronaut Attack!
 {
   Cart_Point AstroLoc = get_location();
   Cart_Point AlienLoc = in_target -> get_location();

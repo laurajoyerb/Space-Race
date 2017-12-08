@@ -124,14 +124,15 @@ bool Model::update()
 {
   timer++; // Increments time always
   srand(timer);
-  int gravity = rand() % 10; // generates integers from 0-9
+  int gravity = rand() % 10; // generates random integers from 0-9
 
   // Three values are picked to change gravity (gravity changes 3/10 of the time)
-  if (gravity == 0)
+  if (gravity == 0) // Occurs 1/10 of the time
   {
-    if(person_ptrs.front() -> get_speed() != 2.5)
+    if(person_ptrs.front() -> get_speed() != 2.5) // If gravity isn't already at a high state
     {
       cout << "Gravity is now greater!" << endl;
+      // Changes speed of all aliens and all astronauts
       for (list <Person*>::iterator it = person_ptrs.begin(); it != person_ptrs.end(); ++it)
       {
         (*it) -> change_speed(2.5);
@@ -142,9 +143,9 @@ bool Model::update()
       }
     }
   }
-  else if (gravity == 1)
+  else if (gravity == 1) // Occurs 1/10 of the time
   {
-    if(person_ptrs.front() -> get_speed() != 5)
+    if(person_ptrs.front() -> get_speed() != 5) // If gravity isn't already at a normal state
     {
       cout << "Gravity is back to normal!" << endl;
       for (list <Person*>::iterator it = person_ptrs.begin(); it != person_ptrs.end(); ++it)
@@ -157,9 +158,9 @@ bool Model::update()
       }
     }
   }
-  else if (gravity == 2)
+  else if (gravity == 2) // Occurs 1/10 of the time
   {
-    if(person_ptrs.front() -> get_speed() != 10)
+    if(person_ptrs.front() -> get_speed() != 10) // If gravity isn't already at a low state
     {
       cout << "Gravity is now less!" << endl;
       for (list <Person*>::iterator it = person_ptrs.begin(); it != person_ptrs.end(); ++it)
@@ -179,7 +180,7 @@ bool Model::update()
   {
     if ((*it) -> get_state() == 'x')
     {
-      active_ptrs.erase(it);
+      active_ptrs.erase(it); // removes dead (inactive) objects
     }
   }
 
@@ -187,7 +188,7 @@ bool Model::update()
   {
     if ((*it) -> is_alive())
     {
-      alive++;
+      alive++; // counts all live astronauts
     }
   }
 
@@ -197,8 +198,9 @@ bool Model::update()
     bool attack = false;
     for (list <Alien*>::iterator it = alien_ptrs.begin(); it != alien_ptrs.end(); ++it)
     {
+      // If model's compMode is true, then every Alien needs to know that compMode is true, so its own member is set to true in this loop
       (*it) -> compMode = true;
-      if (((*it) -> get_state() != 'a') && ((*it) -> get_state() != 'm'))
+      if (((*it) -> get_state() != 'a') && ((*it) -> get_state() != 'm')) // If not attacking or not moving
       {
         for (list <Person*>::iterator it2 = person_ptrs.begin(); it2 != person_ptrs.end(); ++it2)
         {
@@ -208,15 +210,15 @@ bool Model::update()
 
           if ((*it2) -> is_alive() && dist < (*it) -> get_range())
           {
-            (*it) -> start_attack(*it2);
+            (*it) -> start_attack(*it2); // If any person is within range, attack them
             attack = true;
           }
         }
-        if(!attack)
+        if(!attack) // If no person is in range
         {
           for (list <Person*>::iterator it2 = person_ptrs.begin(); it2 != person_ptrs.end(); ++it2)
           {
-            if ((*it2) -> is_alive())
+            if ((*it2) -> is_alive()) // Find the next live astronaut to chase
             {
               Cart_Point dest = (*it2) -> get_location();
               (*it) -> start_moving(dest);
@@ -354,6 +356,10 @@ void Model::handle_new_command()
   int id, x, y;
 
   cin >> type >> id >> x >> y;
+  if (cin.fail())
+  {
+    throw Invalid_Input("Please enter the type (char), ID (int), and x and y coordinates (int).")
+  }
 
   Cart_Point pt = Cart_Point(x,y);
   switch (type)

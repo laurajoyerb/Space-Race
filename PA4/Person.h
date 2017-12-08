@@ -7,7 +7,7 @@
 #include <stdio.h>
 #include <ctype.h>
 
-class Alien;
+class Alien; // Forward declaration of Alien class
 class Person : public Game_Object
 {
 public:
@@ -29,15 +29,15 @@ public:
   double get_speed();
   void change_speed(double in_speed);
 
-  void start_attack(Alien* in_target);
+  void start_attack(Alien* in_target); // EXTRA CREDIT: Astronaut can now attack
 
 protected:
   bool update_location();
   void setup_destination(Cart_Point);
   double speed;
-  double range;
-  double attack_strength;
-  Alien* target;
+  double range; // EXTRA CREDIT: Astronaut fights back
+  double attack_strength; // EXTRA CREDIT
+  Alien* target; // EXTRA CREDIT
   int health;
 
 private:

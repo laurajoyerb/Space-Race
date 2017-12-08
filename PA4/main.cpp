@@ -23,7 +23,7 @@ int main()
 
   char mode;
 
-  COMP:try
+  COMP:try // EXTRA CREDIT: Gives the user the option of computer mode (aliens are computer-controlled)
   {
     cout << "Would you like to play in Normal Mode (n) or in Computer Mode (c)? ";
     cin >> mode;
@@ -36,8 +36,8 @@ int main()
   {
     cout << "ERROR: " << except.msg_ptr << endl;
     cin.clear();
-    cin.ignore(256, '\n');
-    goto COMP;
+    cin.ignore(256, '\n'); // Ignores the remainder of the line that the user entered
+    goto COMP; // Goto statement restarts the try block
   }
 
   if (mode == 'n')
@@ -132,7 +132,7 @@ int main()
         {
           cout << "ERROR: Please enter a valid command!" << endl;
           cin.clear();
-          cin.ignore(256, '\n');
+          cin.ignore(256, '\n'); // Clears the rest of the cin line to start a new line fresh
           show = false;
           break;
         }
@@ -147,7 +147,7 @@ int main()
     {
       cout << "ERROR: " << except.msg_ptr << endl;
       cin.clear();
-      cin.ignore(256, '\n');
+      cin.ignore(256, '\n'); // Clears the rest of the cin line to start a new line fresh
     }
   }
   return 0;

@@ -143,7 +143,7 @@ bool Astronaut::update()
         return true;
         break;
       }
-      case 'a':
+      case 'a': // EXTRA CREDIT: Astronauts now attack aliens too
       {
         Cart_Point AstroLoc = get_location();
         Cart_Point AlienLoc = target -> get_location();
@@ -295,7 +295,7 @@ void Astronaut::show_status()
       cout << " is locked at Space Station." << endl;
       break;
     }
-    case 'a':
+    case 'a': // EXTRA CREDIT
     {
       cout << " attacking alien X" << target -> get_id();
     }

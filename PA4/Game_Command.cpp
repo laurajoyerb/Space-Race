@@ -19,7 +19,7 @@ void do_move_command(Model& model)
 
   if(model.compMode)
   {
-    ax = 'a';
+    ax = 'a'; // If computer-control is on, then the user can only command astronauts to move
   }
   else
   {
@@ -113,13 +113,13 @@ void do_stop_command(Model& model)
     throw Invalid_Input("Please enter an integer for ID number.");
   }
 
-  if(model.compMode)
+  if(model.compMode) // If computer-control is on, then the user can only command astronauts to move
   {
     ax = 'a';
   }
   else
   {
-    cout << "Move Astronaut (enter 'a') or Alien (enter 'x'): ";
+    cout << "Stop Astronaut (enter 'a') or Alien (enter 'x'): ";
     cin >> ax;
 
     if(ax != 'x' && ax != 'a')
@@ -204,7 +204,7 @@ void do_attack_command(Model& model)
     throw Invalid_Input("Please enter an integer for ID number.");
   }
 
-  if(model.compMode)
+  if(model.compMode) // If computer-control is on, then the user can only command astronauts to move
   {
     ax = 'a';
   }
@@ -221,6 +221,7 @@ void do_attack_command(Model& model)
 
   if(ax == 'a')
   {
+    // If input is 'a', then the first id is for the astronaut, and the second id is for the alien
     Person* p = model.get_Person_ptr(id1);
     if (p == 0)
     {
@@ -233,7 +234,7 @@ void do_attack_command(Model& model)
       throw Invalid_Input("Invalid ID number.");
     }
 
-    p -> start_attack(x);
+    p -> start_attack(x); // EXTRA CREDIT: Person attacks alien
   }
   else
   {
