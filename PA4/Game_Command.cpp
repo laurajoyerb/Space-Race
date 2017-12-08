@@ -196,6 +196,7 @@ void do_run_command(Model& model)
 void do_attack_command(Model& model)
 {
   int id1, id2;
+  char ax;
 
   cin >> id1 >> id2;
   if (cin.fail())
@@ -203,19 +204,53 @@ void do_attack_command(Model& model)
     throw Invalid_Input("Please enter an integer for ID number.");
   }
 
-  Person* p = model.get_Person_ptr(id2);
-  if (p == 0)
+  if(model.compMode)
   {
-    throw Invalid_Input("Invalid ID number.");
+    ax = 'a';
+  }
+  else
+  {
+    cout << "Move Astronaut (enter 'a') or Alien (enter 'x'): ";
+    cin >> ax;
+
+    if(ax != 'x' && ax != 'a')
+    {
+      throw Invalid_Input("You must enter an 'a' for an Astronaut or an 'x' for an Alien");
+    }
   }
 
-  Alien* x = model.get_Alien_ptr(id1);
-  if (x == 0)
+  if(ax == 'a')
   {
-    throw Invalid_Input("Invalid ID number.");
-  }
+    Person* p = model.get_Person_ptr(id1);
+    if (p == 0)
+    {
+      throw Invalid_Input("Invalid ID number.");
+    }
 
-  x -> start_attack(p);
+    Alien* x = model.get_Alien_ptr(id2);
+    if (x == 0)
+    {
+      throw Invalid_Input("Invalid ID number.");
+    }
+
+    p -> start_attack(x);
+  }
+  else
+  {
+    Person* p = model.get_Person_ptr(id2);
+    if (p == 0)
+    {
+      throw Invalid_Input("Invalid ID number.");
+    }
+
+    Alien* x = model.get_Alien_ptr(id1);
+    if (x == 0)
+    {
+      throw Invalid_Input("Invalid ID number.");
+    }
+
+    x -> start_attack(p);
+  }
 }
 
 void do_new_command(Model& model)

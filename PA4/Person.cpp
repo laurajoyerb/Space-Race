@@ -8,6 +8,9 @@ Person::Person() : Game_Object('x')
 {
   speed = 5;
   health = 5;
+  attack_strength = 2;
+  range = 2.0;
+  target = NULL;
   cout << "Person default constructed." << endl;
 }
 
@@ -15,6 +18,9 @@ Person::Person(char in_code) : Game_Object(in_code)
 {
   speed = 5;
   health = 5;
+  range = 2.0;
+  attack_strength = 2;
+  target = NULL;
   state = 's';
   cout << "Person constructed." << endl;
 }
@@ -23,6 +29,8 @@ Person::Person(Cart_Point in_loc, int in_id, char in_code) : Game_Object(in_loc,
 {
   speed = 5;
   health = 5;
+  range = 2.0;
+  attack_strength = 2;
   cout << "Person constructed." << endl;
 }
 
@@ -154,6 +162,33 @@ void Person::setup_destination(Cart_Point dest)
   destination = dest;
   Cart_Vector cv = destination - location;
   delta = cv / ((cart_distance(destination, location) / speed)); // different formula from document, still works though I promise
+}
+
+void Person::start_attack(Alien* in_target)
+{
+  Cart_Point AstroLoc = get_location();
+  Cart_Point AlienLoc = in_target -> get_location();
+  double dist = cart_distance(AlienLoc, AstroLoc);
+
+  if (dist <= range)
+  {
+    if (state == 'a')
+    {
+      cout << display_code << id_num << ": Take that!" << endl;
+      in_target -> take_hit(attack_strength);
+    }
+    else
+    {
+      cout << display_code << id_num << ": Smash!" << endl;
+      target = in_target;
+      state = 'a';
+    }
+  }
+
+  if (dist > range)
+  {
+    cout << display_code << id_num << ": Target is out of range" << endl;
+  }
 }
 
 double Person::get_speed()

@@ -143,6 +143,34 @@ bool Astronaut::update()
         return true;
         break;
       }
+      case 'a':
+      {
+        Cart_Point AstroLoc = get_location();
+        Cart_Point AlienLoc = target -> get_location();
+        double dist = cart_distance(AlienLoc, AstroLoc);
+        if (dist > range)
+        {
+          cout << display_code << id_num << ": Target is out of range" << endl;
+          cout << display_code << id_num << ": Chaaaaarge." << endl;
+          state = 's';
+          return true;
+        }
+        else
+        {
+          if (target -> is_alive())
+          {
+            cout << display_code << id_num << ": Take that!" << endl;
+            target -> take_hit(attack_strength);
+            return false;
+          }
+          else
+          {
+            cout << display_code << id_num << ": I win." << endl;
+            state = 's';
+            return true;
+          }
+        }
+      }
       case 'l':
       {
         if (amount_oxygen <= 0)
@@ -266,6 +294,10 @@ void Astronaut::show_status()
     {
       cout << " is locked at Space Station." << endl;
       break;
+    }
+    case 'a':
+    {
+      cout << " attacking alien X" << target -> get_id();
     }
     case 'x':
     {

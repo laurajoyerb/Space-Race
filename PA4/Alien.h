@@ -4,7 +4,7 @@
 #include "Game_Object.h"
 #include "Person.h"
 
-
+class Person;
 class Alien : public Game_Object
 {
 private:
@@ -14,6 +14,7 @@ private:
   Cart_Vector delta;
   double speed;
   double range;
+  int health;
 
 public:
   Alien();
@@ -25,6 +26,9 @@ public:
   void stop();
   bool update_location();
   void setup_destination(Cart_Point);
+
+  bool is_alive();
+  void take_hit(int Pattack_strength);
 
   double get_speed();
   double get_range();

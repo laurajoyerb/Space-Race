@@ -3,9 +3,11 @@
 
 #include "Space_Station.h"
 #include "Oxygen_Depot.h"
+#include "Alien.h"
 #include <stdio.h>
 #include <ctype.h>
 
+class Alien;
 class Person : public Game_Object
 {
 public:
@@ -27,16 +29,20 @@ public:
   double get_speed();
   void change_speed(double in_speed);
 
+  void start_attack(Alien* in_target);
+
 protected:
   bool update_location();
   void setup_destination(Cart_Point);
-
+  double speed;
+  double range;
+  double attack_strength;
+  Alien* target;
   int health;
 
 private:
   Cart_Point destination;
   Cart_Vector delta;
-  double speed;
 };
 
 #endif
