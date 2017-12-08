@@ -139,23 +139,40 @@ void Alien::show_status()
 
 void Alien::start_moving(Cart_Point dest)
 {
-  if (dest.x == location.x && dest.y == location.y) // If already at location, nothing happens besides an "error" message
+  if (state == 'x' && !compMode)
   {
-    cout << "I'm already there. see?" << endl;
+    cout << "I can't move, I'm dead." << endl;
   }
   else
   {
-    setup_destination(dest);
-    state = 'm';
-    cout << "Moving " << id_num << " to " << dest << endl;
-    cout << display_code << id_num << ": On my way." << endl;
+    if (dest.x == location.x && dest.y == location.y && !compMode) // If already at location, nothing happens besides an "error" message
+    {
+      cout << "I'm already there. see?" << endl;
+    }
+    else
+    {
+      setup_destination(dest);
+      state = 'm';
+      if (!compMode)
+      {
+        cout << "Moving " << id_num << " to " << dest << endl;
+        cout << display_code << id_num << ": On my way." << endl;
+      }
+    }
   }
 }
 
 void Alien::stop()
 {
-  state = 's';
-  cout << display_code << id_num << ": Stopped." << endl;
+  if (state == 'x' && !compMode)
+  {
+    cout << "I can't move, I'm dead." << endl;
+  }
+  else if (!compMode)
+  {
+    state = 's';
+    cout << display_code << id_num << ": Stopped." << endl;
+  }
 }
 
 bool Alien::update_location()
