@@ -145,7 +145,7 @@ bool Person::update_location()
       return false;
     }
   }
-  return false;
+  return true;
 }
 
 void Person::setup_destination(Cart_Point dest)
@@ -153,4 +153,9 @@ void Person::setup_destination(Cart_Point dest)
   destination = dest;
   Cart_Vector cv = destination - location;
   delta = cv / ((cart_distance(destination, location) / speed)); // different formula from document, still works though I promise
+}
+
+double Person::get_speed()
+{
+  return speed;
 }

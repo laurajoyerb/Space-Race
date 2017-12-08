@@ -12,9 +12,7 @@ void do_move_command(Model& model)
   cin >> id >> x >> y;
   if (cin.fail())
   {
-    throw Invalid_Input("Bad");
-    cin.clear();
-    cin.ignore(numeric_limits<streamsize>::max());
+    throw Invalid_Input("Please enter a command (char), an id number (int), and an x and y coordinate (int).");
   }
 
   Cart_Point pt = Cart_Point(x,y);
@@ -28,32 +26,27 @@ void do_move_command(Model& model)
     cout << "Move Astronaut (enter 'a') or Alien (enter 'x'): ";
     cin >> ax;
 
-    while (ax != 'x' && ax != 'a')
+    if(ax != 'x' && ax != 'a')
     {
-      cout << "Please enter 'a' for Astronaut or 'x' for Alien: ";
-      cin >> ax;
+      throw Invalid_Input("You must enter an 'a' for an Astronaut or an 'x' for an Alien");
     }
   }
 
   if (ax == 'a')
   {
     Person* p = model.get_Person_ptr(id);
-    while (p == 0)
+    if (p == 0)
     {
-      cout << "Invalid id. Re-enter id: ";
-      cin >> id;
-      p = model.get_Person_ptr(id);
+      throw Invalid_Input("Invalid ID number.");
     }
     p -> start_moving(pt);
   }
   else if (ax == 'x')
   {
     Alien* x = model.get_Alien_ptr(id);
-    while (!x)
+    if (x == 0)
     {
-      cout << "Invalid ID. Re-enter ID: ";
-      cin >> id;
-      x = model.get_Alien_ptr(id);
+      throw Invalid_Input("Invalid ID number.");
     }
     x -> start_moving(pt);
   }
@@ -64,21 +57,21 @@ void do_work_command(Model& model)
   int id1, id2;
 
   cin >> id1 >> id2;
+  if (cin.fail())
+  {
+    throw Invalid_Input("Please enter an integer for ID number.");
+  }
 
   Person* p = model.get_Person_ptr(id1);
-  while (!p)
+  if (p == 0)
   {
-    cout << "Invalid ID for Astronaut. Re-enter Astronaut ID: ";
-    cin >> id1;
-    p = model.get_Person_ptr(id1);
+    throw Invalid_Input("Invalid ID number.");
   }
 
   Oxygen_Depot* od = model.get_Oxygen_Depot_ptr(id2);
-  while (!od)
+  if (od == 0)
   {
-    cout << "Invalid ID for Oxygen Depot. Re-enter Depot ID: ";
-    cin >> id2;
-    od = model.get_Oxygen_Depot_ptr(id2);
+    throw Invalid_Input("Invalid ID number.");
   }
 
   p -> start_supplying(od);
@@ -89,21 +82,21 @@ void do_deposit_command(Model& model)
   int id1, id2;
 
   cin >> id1 >> id2;
+  if (cin.fail())
+  {
+    throw Invalid_Input("Please enter an integer for ID number.");
+  }
 
   Person* p = model.get_Person_ptr(id1);
-  while (!p)
+  if (p == 0)
   {
-    cout << "Invalid ID for Astronaut. Re-enter Astronaut ID: ";
-    cin >> id1;
-    p = model.get_Person_ptr(id1);
+    throw Invalid_Input("Invalid ID number.");
   }
 
   Space_Station* ss = model.get_Space_Station_ptr(id2);
-  while (!ss)
+  if (ss == 0)
   {
-    cout << "Invalid ID for Space Station. Re-enter Station ID: ";
-    cin >> id2;
-    ss = model.get_Space_Station_ptr(id2);
+    throw Invalid_Input("Invalid ID number.");
   }
 
   p -> start_depositing(ss);
@@ -115,6 +108,10 @@ void do_stop_command(Model& model)
   char ax;
 
   cin >> id;
+  if (cin.fail())
+  {
+    throw Invalid_Input("Please enter an integer for ID number.");
+  }
 
   if(model.compMode)
   {
@@ -125,32 +122,27 @@ void do_stop_command(Model& model)
     cout << "Move Astronaut (enter 'a') or Alien (enter 'x'): ";
     cin >> ax;
 
-    while (ax != 'x' && ax != 'a')
+    if(ax != 'x' && ax != 'a')
     {
-      cout << "Please enter 'a' for Astronaut or 'x' for Alien: ";
-      cin >> ax;
+      throw Invalid_Input("You must enter an 'a' for an Astronaut or an 'x' for an Alien");
     }
   }
 
   if (ax == 'a')
   {
     Person* p = model.get_Person_ptr(id);
-    while (!p)
+    if (p == 0)
     {
-      cout << "Invalid id. Re-enter id: ";
-      cin >> id;
-      p = model.get_Person_ptr(id);
+      throw Invalid_Input("Invalid ID number.");
     }
     p -> stop();
   }
   else if (ax == 'x')
   {
     Alien* x = model.get_Alien_ptr(id);
-    while (!x)
+    if (x == 0)
     {
-      cout << "Invalid ID. Re-enter ID: ";
-      cin >> id;
-      x = model.get_Alien_ptr(id);
+      throw Invalid_Input("Invalid ID number.");
     }
     x -> stop();
   }
@@ -161,21 +153,21 @@ void do_lock_command(Model& model)
   int id1, id2;
 
   cin >> id1 >> id2;
+  if (cin.fail())
+  {
+    throw Invalid_Input("Please enter an integer for ID number.");
+  }
 
   Person* p = model.get_Person_ptr(id1);
-  while (!p)
+  if (p == 0)
   {
-    cout << "Invalid ID for Astronaut. Re-enter Astronaut ID: ";
-    cin >> id1;
-    p = model.get_Person_ptr(id1);
+    throw Invalid_Input("Invalid ID number.");
   }
 
   Space_Station* ss = model.get_Space_Station_ptr(id2);
-  while (!ss)
+  if (ss == 0)
   {
-    cout << "Invalid ID for Space Station. Re-enter Station ID: ";
-    cin >> id2;
-    ss = model.get_Space_Station_ptr(id2);
+    throw Invalid_Input("Invalid ID number.");
   }
 
   p -> go_to_station(ss);
@@ -206,21 +198,21 @@ void do_attack_command(Model& model)
   int id1, id2;
 
   cin >> id1 >> id2;
+  if (cin.fail())
+  {
+    throw Invalid_Input("Please enter an integer for ID number.");
+  }
 
   Person* p = model.get_Person_ptr(id2);
-  while (!p)
+  if (p == 0)
   {
-    cout << "Invalid ID for Astronaut. Re-enter Astronaut ID: ";
-    cin >> id2;
-    p = model.get_Person_ptr(id2);
+    throw Invalid_Input("Invalid ID number.");
   }
 
   Alien* x = model.get_Alien_ptr(id1);
-  while (!x)
+  if (x == 0)
   {
-    cout << "Invalid ID for Alien. Re-enter Alien ID: ";
-    cin >> id1;
-    x = model.get_Alien_ptr(id1);
+    throw Invalid_Input("Invalid ID number.");
   }
 
   x -> start_attack(p);

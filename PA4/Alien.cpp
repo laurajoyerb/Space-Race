@@ -177,3 +177,13 @@ void Alien::setup_destination(Cart_Point dest)
   Cart_Vector cv = destination - location;
   delta = cv / ((cart_distance(destination, location) / speed)); // different formula from document, still works though I promise
 }
+
+double Alien::get_speed()
+{
+  return speed;
+}
+
+double Alien::get_range()
+{
+  return range;
+}

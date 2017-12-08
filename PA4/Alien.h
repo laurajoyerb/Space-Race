@@ -12,6 +12,8 @@ private:
   Person* target;
   Cart_Point destination;
   Cart_Vector delta;
+  double speed;
+  double range;
 
 public:
   Alien();
@@ -24,8 +26,8 @@ public:
   bool update_location();
   void setup_destination(Cart_Point);
 
-  double speed;
-  double range;
+  double get_speed();
+  double get_range();
   bool compMode;
 };
 

@@ -22,8 +22,23 @@ int main()
   View v = View();
 
   char mode;
-  cout << "Would you like to play in Normal Mode (n) or in Computer Mode (c)? ";
-  cin >> mode;
+
+  COMP:try
+  {
+    cout << "Would you like to play in Normal Mode (n) or in Computer Mode (c)? ";
+    cin >> mode;
+    if(mode != 'n' && mode != 'c')
+    {
+      throw Invalid_Input("Enter 'n' for Normal Mode or 'c' for Computer Mode.");
+    }
+  }
+  catch(Invalid_Input& except)
+  {
+    cout << "ERROR: " << except.msg_ptr << endl;
+    cin.clear();
+    cin.ignore(256, '\n');
+    goto COMP;
+  }
 
   if (mode == 'n')
   {
@@ -44,10 +59,14 @@ int main()
     bool show; // stores whether or not a command shows the display after the command
 
     cout << "Enter a command: ";
-    cin >> command;
+
     try
     {
-
+      cin >> command;
+      if(cin.fail())
+      {
+        throw Invalid_Input("Please enter one character as the command.");
+      }
       switch (command)
       {
         case 'm':
@@ -112,18 +131,23 @@ int main()
         default: // Executes for invalid command codes
         {
           cout << "ERROR: Please enter a valid command!" << endl;
-          show = false; // invalid flag
+          cin.clear();
+          cin.ignore(256, '\n');
+          show = false;
           break;
         }
+      }
+
+      if (show)
+      {
+        m.display(v); // only displays if command was valid; displays after every command is executed
       }
     }
     catch(Invalid_Input& except)
     {
-      cout << "Invalid input - " << except.msg_ptr << endl;
-    }
-    if (show)
-    {
-      m.display(v); // only displays if command was valid; displays after every command is executed
+      cout << "ERROR: " << except.msg_ptr << endl;
+      cin.clear();
+      cin.ignore(256, '\n');
     }
   }
   return 0;

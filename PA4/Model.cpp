@@ -129,46 +129,46 @@ bool Model::update()
   // // Three values are picked to change gravity (gravity changes 3/10 of the time)
   // if (gravity == 0)
   // {
-  //   if(person_ptrs.front() -> speed != 2.5)
+  //   if(person_ptrs.front() -> get_speed() != 2.5)
   //   {
   //     cout << "Gravity is now greater!" << endl;
   //     for (list <Person*>::iterator it = person_ptrs.begin(); it != person_ptrs.end(); ++it)
   //     {
-  //       (*it) -> speed = 2.5;
+  //       (*it) -> get_speed() = 2.5;
   //     }
   //     for (list <Alien*>::iterator it = alien_ptrs.begin(); it != alien_ptrs.end(); ++it)
   //     {
-  //       (*it) -> speed = 2.5;
+  //       (*it) -> get_speed() = 2.5;
   //     }
   //   }
   // }
   // else if (gravity == 1)
   // {
-  //   if(person_ptrs.front() -> speed != 5)
+  //   if(person_ptrs.front() -> get_speed() != 5)
   //   {
   //     cout << "Gravity is back to normal!" << endl;
   //     for (list <Person*>::iterator it = person_ptrs.begin(); it != person_ptrs.end(); ++it)
   //     {
-  //       (*it) -> speed = 5;
+  //       (*it) -> get_speed() = 5;
   //     }
   //     for (list <Alien*>::iterator it = alien_ptrs.begin(); it != alien_ptrs.end(); ++it)
   //     {
-  //       (*it) -> speed = 2.5;
+  //       (*it) -> get_speed() = 2.5;
   //     }
   //   }
   // }
   // else if (gravity == 2)
   // {
-  //   if(person_ptrs.front() -> speed != 10)
+  //   if(person_ptrs.front() -> get_speed() != 10)
   //   {
   //     cout << "Gravity is now less!" << endl;
   //     for (list <Person*>::iterator it = person_ptrs.begin(); it != person_ptrs.end(); ++it)
   //     {
-  //       (*it) -> speed = 10;
+  //       (*it) -> get_speed() = 10;
   //     }
   //     for (list <Alien*>::iterator it = alien_ptrs.begin(); it != alien_ptrs.end(); ++it)
   //     {
-  //       (*it) -> speed = 2.5;
+  //       (*it) -> get_speed() = 2.5;
   //     }
   //   }
   // }
@@ -206,7 +206,7 @@ bool Model::update()
           Cart_Point AstroLoc = (*it2) -> get_location();
           double dist = cart_distance(AlienLoc, AstroLoc);
 
-          if ((*it2) -> is_alive() && dist < (*it) -> range)
+          if ((*it2) -> is_alive() && dist < (*it) -> get_range())
           {
             (*it) -> start_attack(*it2);
             attack = true;
@@ -242,7 +242,6 @@ bool Model::update()
   bool tempStation = false; // Temporary check used for atStation
   for (list <Person*>::iterator it = person_ptrs.begin(); it != person_ptrs.end(); ++it)
   {
-    cout << "Person " << (*it) -> get_id() << " Alive bool: " << (*it) -> is_alive() << endl;
     if ((*it) -> is_alive()) // only checks for living astronauts
     {
       for (list <Space_Station*>::iterator it2 = station_ptrs.begin(); it2 != station_ptrs.end(); ++it2)
@@ -250,9 +249,6 @@ bool Model::update()
         // Each person loops through each station before looping to next person
         Cart_Point personloc = (*it) -> get_location();
         Cart_Point stationloc = (*it2) -> get_location();
-
-        cout << "Person " << (*it) -> get_id() << " location: " << personloc << endl;
-        cout << "Space_Station " << (*it2) -> get_id() << " location: " << stationloc << endl;
 
         if((personloc.x == stationloc.x) && (personloc.y == stationloc.y) && ((*it) -> get_state() == 'l'))
         {
