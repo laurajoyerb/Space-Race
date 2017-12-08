@@ -123,55 +123,55 @@ Space_Station* Model::get_Space_Station_ptr(int id)
 bool Model::update()
 {
   timer++; // Increments time always
-  // srand(timer);
-  // int gravity = rand() % 10; // generates integers from 0-9
-  //
-  // // Three values are picked to change gravity (gravity changes 3/10 of the time)
-  // if (gravity == 0)
-  // {
-  //   if(person_ptrs.front() -> get_speed() != 2.5)
-  //   {
-  //     cout << "Gravity is now greater!" << endl;
-  //     for (list <Person*>::iterator it = person_ptrs.begin(); it != person_ptrs.end(); ++it)
-  //     {
-  //       (*it) -> get_speed() = 2.5;
-  //     }
-  //     for (list <Alien*>::iterator it = alien_ptrs.begin(); it != alien_ptrs.end(); ++it)
-  //     {
-  //       (*it) -> get_speed() = 2.5;
-  //     }
-  //   }
-  // }
-  // else if (gravity == 1)
-  // {
-  //   if(person_ptrs.front() -> get_speed() != 5)
-  //   {
-  //     cout << "Gravity is back to normal!" << endl;
-  //     for (list <Person*>::iterator it = person_ptrs.begin(); it != person_ptrs.end(); ++it)
-  //     {
-  //       (*it) -> get_speed() = 5;
-  //     }
-  //     for (list <Alien*>::iterator it = alien_ptrs.begin(); it != alien_ptrs.end(); ++it)
-  //     {
-  //       (*it) -> get_speed() = 2.5;
-  //     }
-  //   }
-  // }
-  // else if (gravity == 2)
-  // {
-  //   if(person_ptrs.front() -> get_speed() != 10)
-  //   {
-  //     cout << "Gravity is now less!" << endl;
-  //     for (list <Person*>::iterator it = person_ptrs.begin(); it != person_ptrs.end(); ++it)
-  //     {
-  //       (*it) -> get_speed() = 10;
-  //     }
-  //     for (list <Alien*>::iterator it = alien_ptrs.begin(); it != alien_ptrs.end(); ++it)
-  //     {
-  //       (*it) -> get_speed() = 2.5;
-  //     }
-  //   }
-  // }
+  srand(timer);
+  int gravity = rand() % 10; // generates integers from 0-9
+
+  // Three values are picked to change gravity (gravity changes 3/10 of the time)
+  if (gravity == 0)
+  {
+    if(person_ptrs.front() -> get_speed() != 2.5)
+    {
+      cout << "Gravity is now greater!" << endl;
+      for (list <Person*>::iterator it = person_ptrs.begin(); it != person_ptrs.end(); ++it)
+      {
+        (*it) -> change_speed(2.5);
+      }
+      for (list <Alien*>::iterator it = alien_ptrs.begin(); it != alien_ptrs.end(); ++it)
+      {
+        (*it) -> change_speed(2.5);
+      }
+    }
+  }
+  else if (gravity == 1)
+  {
+    if(person_ptrs.front() -> get_speed() != 5)
+    {
+      cout << "Gravity is back to normal!" << endl;
+      for (list <Person*>::iterator it = person_ptrs.begin(); it != person_ptrs.end(); ++it)
+      {
+        (*it) -> change_speed(5);
+      }
+      for (list <Alien*>::iterator it = alien_ptrs.begin(); it != alien_ptrs.end(); ++it)
+      {
+        (*it) -> change_speed(5);
+      }
+    }
+  }
+  else if (gravity == 2)
+  {
+    if(person_ptrs.front() -> get_speed() != 10)
+    {
+      cout << "Gravity is now less!" << endl;
+      for (list <Person*>::iterator it = person_ptrs.begin(); it != person_ptrs.end(); ++it)
+      {
+        (*it) -> change_speed(10);
+      }
+      for (list <Alien*>::iterator it = alien_ptrs.begin(); it != alien_ptrs.end(); ++it)
+      {
+        (*it) -> change_speed(10);
+      }
+    }
+  }
 
   alive = 0;
 

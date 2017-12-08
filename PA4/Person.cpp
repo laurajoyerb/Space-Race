@@ -123,6 +123,7 @@ void Person::go_to_station(Space_Station*)
 
 bool Person::update_location()
 {
+  setup_destination(destination);
   if(delta.x == 0 && delta.y == 0)
   {
     return true;
@@ -158,4 +159,9 @@ void Person::setup_destination(Cart_Point dest)
 double Person::get_speed()
 {
   return speed;
+}
+
+void Person::change_speed(double in_speed)
+{
+  speed = in_speed;
 }

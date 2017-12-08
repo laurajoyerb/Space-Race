@@ -28,6 +28,7 @@ public:
 
   double get_speed();
   double get_range();
+  void change_speed(double in_speed);
   bool compMode;
 };
 

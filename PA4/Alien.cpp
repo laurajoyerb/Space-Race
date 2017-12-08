@@ -153,6 +153,11 @@ void Alien::stop()
 
 bool Alien::update_location()
 {
+  setup_destination(destination);
+  if(delta.x == 0 && delta.y == 0)
+  {
+    return true;
+  }
   Cart_Vector newdist = destination - location;
   newdist.x = fabs(newdist.x);
   newdist.y = fabs(newdist.y); // fabs gets distance from destination
@@ -186,4 +191,9 @@ double Alien::get_speed()
 double Alien::get_range()
 {
   return range;
+}
+
+void Alien::change_speed(double in_speed)
+{
+  speed = in_speed;
 }

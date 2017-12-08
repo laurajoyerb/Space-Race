@@ -25,6 +25,7 @@ public:
   virtual void go_to_station(Space_Station*);
 
   double get_speed();
+  void change_speed(double in_speed);
 
 protected:
   bool update_location();
