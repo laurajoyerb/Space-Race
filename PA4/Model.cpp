@@ -358,7 +358,7 @@ void Model::handle_new_command()
   cin >> type >> id >> x >> y;
   if (cin.fail())
   {
-    throw Invalid_Input("Please enter the type (char), ID (int), and x and y coordinates (int).")
+    throw Invalid_Input("Please enter the type (char), ID (int), and x and y coordinates (int).");
   }
 
   Cart_Point pt = Cart_Point(x,y);

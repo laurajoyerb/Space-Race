@@ -31,7 +31,7 @@ Person::Person(Cart_Point in_loc, int in_id, char in_code) : Game_Object(in_loc,
   health = 5;
   range = 2.0; // EXTRA CREDIT
   attack_strength = 2;// EXTRA CREDIT
-  target = NULL: // EXTRA CREDIT
+  target = NULL; // EXTRA CREDIT
   cout << "Person constructed." << endl;
 }
 
