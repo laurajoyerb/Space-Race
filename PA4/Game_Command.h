@@ -1,3 +1,5 @@
+// EXTRA CREDIT STEP 7: Astronauts can attack aliens
+
 #ifndef GAME_COMMAND
 #define GAME_COMMAND
 

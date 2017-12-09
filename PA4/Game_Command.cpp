@@ -210,7 +210,7 @@ void do_attack_command(Model& model)
   }
   else
   {
-    cout << "Move Astronaut (enter 'a') or Alien (enter 'x'): ";
+    cout << "Astronaut attacker (enter 'a') or Alien attacker (enter 'x'): ";
     cin >> ax;
 
     if(ax != 'x' && ax != 'a')

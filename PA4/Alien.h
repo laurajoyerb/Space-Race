@@ -1,3 +1,5 @@
+// EXTRA CREDIT STEP 7: Aliens now can be attacked by astronauts; they can also be computer-controlled; their speed changes with gravity
+
 #ifndef ALIEN
 #define ALIEN
 

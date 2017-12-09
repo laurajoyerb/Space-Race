@@ -27,7 +27,8 @@ public:
   virtual void go_to_station(Space_Station*);
 
   double get_speed();
-  void change_speed(double in_speed);
+  Cart_Point get_destination(); // EXTRA CREDIT: added getter for alien chase
+  void change_speed(double in_speed); // EXTRA CREDIT: change speed due to gravity changes
 
   void start_attack(Alien* in_target); // EXTRA CREDIT: Astronaut can now attack
 

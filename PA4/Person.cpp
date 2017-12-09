@@ -201,3 +201,8 @@ void Person::change_speed(double in_speed)
 {
   speed = in_speed;
 }
+
+Cart_Point Person::get_destination()
+{
+  return destination;
+}

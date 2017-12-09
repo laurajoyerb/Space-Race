@@ -192,36 +192,41 @@ bool Model::update()
     }
   }
 
-  if (compMode)
+  // Control of aliens (chase and attack)
+  if (this -> compMode)
   {
-    // Control of aliens
     bool attack = false;
     for (list <Alien*>::iterator it = alien_ptrs.begin(); it != alien_ptrs.end(); ++it)
     {
       // If model's compMode is true, then every Alien needs to know that compMode is true, so its own member is set to true in this loop
       (*it) -> compMode = true;
-      if (((*it) -> get_state() != 'a') && ((*it) -> get_state() != 'm')) // If not attacking or not moving
+      if ((*it) -> get_state() != 'x') // executes for all live aliens
       {
-        for (list <Person*>::iterator it2 = person_ptrs.begin(); it2 != person_ptrs.end(); ++it2)
-        {
-          Cart_Point AlienLoc = (*it) -> get_location();
-          Cart_Point AstroLoc = (*it2) -> get_location();
-          double dist = cart_distance(AlienLoc, AstroLoc);
-
-          if ((*it2) -> is_alive() && dist < (*it) -> get_range())
-          {
-            (*it) -> start_attack(*it2); // If any person is within range, attack them
-            attack = true;
-          }
-        }
-        if(!attack) // If no person is in range
+        if (((*it) -> get_state() != 'a') && ((*it) -> get_state() != 'm')) // If not already in action (attacking or moving)
         {
           for (list <Person*>::iterator it2 = person_ptrs.begin(); it2 != person_ptrs.end(); ++it2)
           {
-            if ((*it2) -> is_alive()) // Find the next live astronaut to chase
+            Cart_Point AlienLoc = (*it) -> get_location();
+            Cart_Point AstroLoc = (*it2) -> get_location();
+            double dist = cart_distance(AlienLoc, AstroLoc);
+
+            if ((*it2) -> is_alive() && dist < (*it) -> get_range())
             {
-              Cart_Point dest = (*it2) -> get_location();
-              (*it) -> start_moving(dest);
+              (*it) -> start_attack(*it2); // If any person is within range, attack them
+              attack = true;
+              break;
+            }
+          }
+          if(!attack) // If no person is in range
+          {
+            for (list <Person*>::iterator it2 = person_ptrs.begin(); it2 != person_ptrs.end(); ++it2)
+            {
+              if ((*it2) -> is_alive()) // Find the next live astronaut to chase
+              {
+                Cart_Point dest = (*it2) -> get_destination();
+                (*it) -> start_moving(dest);
+                break;
+              }
             }
           }
         }
@@ -298,8 +303,6 @@ bool Model::update()
   {
     cout << "Ready for takeoff? " << count_down << "..." << endl;
     cout << "Missing " << missing << " astronauts!" << endl;
-    cout << "allAstro: " << allAstro << endl;
-    cout << "atStation: " << atStation << endl;
     count_down--; // countdown begins
 
     if (count_down <= 0) // If take off happened / count down ended, you lose

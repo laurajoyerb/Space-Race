@@ -136,7 +136,6 @@ void Alien::show_status()
   }
 }
 
-
 void Alien::start_moving(Cart_Point dest)
 {
   if (state == 'x' && !compMode) // EXTRA CREDIT

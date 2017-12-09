@@ -262,7 +262,7 @@ void Astronaut::show_status()
   {
     case 's':
     {
-      cout << " stopped with " << amount_oxygen << " oxygen and " << amount_moonstones << " moon stones and " << health << " health." << endl;
+      cout << " stopped with " << amount_oxygen << " oxygen and " << amount_moonstones << " moon stones." << endl;
       break;
     }
     case 'm':
@@ -272,7 +272,7 @@ void Astronaut::show_status()
     }
     case 'o':
     {
-      cout << " is outbound to a Depot with " << amount_oxygen << " oxygen and " << amount_moonstones << " moon stones and " << health << " health." << endl;
+      cout << " is outbound to a Depot with " << amount_oxygen << " oxygen and " << amount_moonstones << " moon stones." << endl;
       break;
     }
     case 'g':
