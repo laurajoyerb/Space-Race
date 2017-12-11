@@ -180,7 +180,7 @@ bool Model::update()
   {
     if ((*it) -> get_state() == 'x')
     {
-      active_ptrs.erase(it); // removes dead (inactive) objects
+      it = active_ptrs.erase(it); // removes dead (inactive) objects
     }
   }
 
