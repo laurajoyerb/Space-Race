@@ -1,3 +1,5 @@
+// EXTRA CREDIT: I completed Step 7, but I did not do Step 6. For Step 7, I change gravity randomly 3/10 of the time. I also created a computer-controlled mode that has intelligent aliens that chase astronauts! They begin chasing once the astronaut moves for the first time. Lastly, I added the ability for astronauts to attack aliens back! Now aliens can die as well. They have the same health and astronauts, and astronauts have the same attack strength as aliens
+
 #include <iostream>
 #include "Game_Command.h"
 #include "Model.h"
@@ -130,10 +132,8 @@ int main()
         }
         default: // Executes for invalid command codes
         {
-          cout << "ERROR: Please enter a valid command!" << endl;
-          cin.clear();
-          cin.ignore(256, '\n'); // Clears the rest of the cin line to start a new line fresh
           show = false;
+          throw Invalid_Input("Please enter a valid command!");
           break;
         }
       }

@@ -369,6 +369,13 @@ void Model::handle_new_command()
   {
     case 'd':
     {
+      for (list <Oxygen_Depot*>::iterator it = depot_ptrs.begin(); it != depot_ptrs.end(); ++it)
+      {
+        if((*it) -> get_id() == id)
+        {
+          throw Invalid_Input("ID number already exists.");
+        }
+      }
       Oxygen_Depot* ptrD = new Oxygen_Depot(pt, id);
       depot_ptrs.push_back(ptrD);
       object_ptrs.push_back(ptrD);
@@ -377,6 +384,13 @@ void Model::handle_new_command()
     }
     case 's':
     {
+      for (list <Space_Station*>::iterator it = station_ptrs.begin(); it != station_ptrs.end(); ++it)
+      {
+        if((*it) -> get_id() == id)
+        {
+          throw Invalid_Input("ID number already exists.");
+        }
+      }
       Space_Station* ptrS = new Space_Station(pt, id);
       station_ptrs.push_back(ptrS);
       object_ptrs.push_back(ptrS);
@@ -385,6 +399,13 @@ void Model::handle_new_command()
     }
     case 'a':
     {
+      for (list <Person*>::iterator it = person_ptrs.begin(); it != person_ptrs.end(); ++it)
+      {
+        if((*it) -> get_id() == id)
+        {
+          throw Invalid_Input("ID number already exists.");
+        }
+      }
       Astronaut* ptrA = new Astronaut(id, pt);
       person_ptrs.push_back(ptrA);
       object_ptrs.push_back(ptrA);
@@ -393,11 +414,21 @@ void Model::handle_new_command()
     }
     case 'x':
     {
+      for (list <Alien*>::iterator it = alien_ptrs.begin(); it != alien_ptrs.end(); ++it)
+      {
+        if((*it) -> get_id() == id)
+        {
+          throw Invalid_Input("ID number already exists.");
+        }
+      }
       Alien* ptrX = new Alien(id, pt);
       alien_ptrs.push_back(ptrX);
       object_ptrs.push_back(ptrX);
       active_ptrs.push_back(ptrX);
       break;
     }
+    default:
+      throw Invalid_Input("Invalid type. Enter 'd', 's', 'a', or 'x'.");
+      break;
   }
 }
