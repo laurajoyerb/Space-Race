@@ -23,7 +23,7 @@ int main()
 
   View v = View();
 
-  char mode;
+  char mode; // computer-controlled or not
 
   COMP:try // EXTRA CREDIT: Gives the user the option of computer mode (aliens are computer-controlled)
   {
