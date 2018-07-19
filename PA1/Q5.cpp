@@ -5,6 +5,12 @@
 using namespace std;
 
 int main() {
+  cout << "Welcome to your Encryptor. You may choose one of the following cases:" << endl;
+  cout << "Case 1: Change case" << endl;
+  cout << "Case 2: Change case and \"reverse\" letter" << endl;
+  cout << "Case 3: Encrypt character (by moving it 6 characters \"ahead\"" << endl;
+
+
   string both;
   cout << "Enter char, operation: ";
   cin >> both;
