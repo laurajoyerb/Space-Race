@@ -1,6 +1,7 @@
-// EXTRA CREDIT: I completed Step 7, but I did not do Step 6. For Step 7, I change gravity randomly 3/10 of the time. I also created a computer-controlled mode that has intelligent aliens that chase astronauts! They begin chasing once the astronaut moves for the first time. Lastly, I added the ability for astronauts to attack aliens back! Now aliens can die as well. They have the same health and astronauts, and astronauts have the same attack strength as aliens
+// EXTRA CREDIT: I change gravity randomly 3/10 of the time. I also created a computer-controlled mode that has intelligent aliens that chase astronauts! They begin chasing once the astronaut moves for the first time. Lastly, I added the ability for astronauts to attack aliens back. Now aliens can die as well. They have the same health and attack strength.
 
 #include <iostream>
+#include <string>
 #include "Game_Command.h"
 #include "Model.h"
 #include "View.h"
@@ -29,6 +30,7 @@ int main()
   {
     cout << "Would you like to play in Normal Mode (n) or in Computer Mode (c)? ";
     cin >> mode;
+    mode = tolower(mode)
     if(mode != 'n' && mode != 'c')
     {
       throw Invalid_Input("Enter 'n' for Normal Mode or 'c' for Computer Mode.");
@@ -60,11 +62,26 @@ int main()
   {
     bool show; // stores whether or not a command shows the display after the command
 
+    cout << endl;
+    cout << "Commands:" << endl;
+    cout << "m ID1 X Y to move" << endl;
+    cout << "w ID1 ID2 to work an oxygen depot" << endl;
+    cout << "d ID1 ID2 to deposit moonstones" << endl;
+    cout << "s ID1 to stop" << endl;
+    cout << "l ID1 ID2 to lock in at space station" << endl;
+    cout << "a ID1 ID2 to attack" << endl;
+    cout << "n TYPE ID X Y to create new object" << endl;
+    cout << "g to go" << endl;
+    cout << "r to run" << endl;
+    cout << "q to quit program" << endl;
+    cout << endl;
+
     cout << "Enter a command: ";
 
     try
     {
       cin >> command;
+      command = tolower(command)
       if(cin.fail())
       {
         throw Invalid_Input("Please enter one character as the command.");

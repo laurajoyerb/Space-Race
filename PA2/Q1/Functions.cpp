@@ -26,6 +26,18 @@ void runcode() // In charge of handling the run while loop and the switch statem
 {
   while (run)
   {
+    // Command Menu
+    cout << endl;
+    cout << "Commands:" << endl;
+    cout << "f - Calculates factorial" << endl;
+    cout << "r - Calculates square root" << endl;
+    cout << "d - Calculates odd numbers" << endl;
+    cout << "l - Calculates natural log" << endl;
+    cout << "r - Calculates square root" << endl;
+    cout << "d - Calculates odd numbers" << endl;
+    cout << "l - Calculates natural log" << endl;
+    cout << "q - Quits program" << endl;
+
     // Receives input for command code and converts it to lowercase
     cout << "Please enter a command code: ";
     if (readfile && ! (readfile -> eof()))

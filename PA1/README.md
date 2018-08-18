@@ -1,7 +1,7 @@
 # PA1
 This is the first assignment from EC327.
 
-This assignment focused on the basics of C++ programming. It is divided into four small programs:
+This assignment focused on the basics of C++ programming, including data types, operations, loops, and basic functions. It is divided into five small programs:
 
 Q1 takes input for coordinates of the leftmost and bottommost corner of two different rectangles as well as their dimensions.
 It then calculates whether or not these rectangles intersect. It involves error-checking and cin/cout statements.

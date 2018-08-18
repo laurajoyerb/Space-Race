@@ -1,4 +1,5 @@
 #include <iostream>
+#include <string>
 #include "Game_Command.h"
 #include "Model.h"
 #include "View.h"
@@ -20,7 +21,7 @@ int main()
 
   View v = View();
 
-  // Begins gaem with statuses of all objects and the initial display and time
+  // Begins game with statuses of all objects and the initial display and time
   m.show_status();
   m.display(v);
 
@@ -29,9 +30,21 @@ int main()
   {
     bool valid = true; // stores whether or not command was a valid command
 
+    cout << endl;
+    cout << "Commands:" << endl;
+    cout << "m ID1 X Y to move" << endl;
+    cout << "w ID1 ID2 to work an oxygen depot" << endl;
+    cout << "d ID1 ID2 to deposit moonstones" << endl;
+    cout << "s ID1 to stop" << endl;
+    cout << "l ID1 ID2 to lock in at space station" << endl;
+    cout << "g to go" << endl;
+    cout << "r to run" << endl;
+    cout << "q to quit program" << endl;
+    cout << endl;
     cout << "Enter a command: ";
 
-    cin >> command; // first command is taken here, all others are taken inside Game_Command functions
+    cin >> command;
+    command = tolower(command);
 
     switch (command)
     {

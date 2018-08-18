@@ -3,4 +3,4 @@ Programming Assignments for EC327 Intro to Software Engineering (including Space
 
 EC327 is a course offered by Boston University focusing on C++ and implementation of effective software engineering techniques
 
-This course was taught by Professor Douglas Densmore
+This course was taught by Professor Douglas Densmore during the fall of 2017

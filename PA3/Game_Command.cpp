@@ -1,4 +1,5 @@
 #include <iostream>
+#include <string>
 #include "Game_Command.h"
 
 using namespace std;
